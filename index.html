@@ -50,21 +50,10 @@
         <!-- View Mode Box -->
         <div id="viewModeBox" class="hidden mb-10 p-8 rounded-3xl bg-cardbg border border-cyan-500/30 shadow-2xl shadow-cyan-500/5">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message & Media</h2>
+                <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message</h2>
                 <span id="viewPolicyBadge" class="text-xs bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full border border-cyan-500/20">Reader Control Active</span>
             </div>
             <div class="bg-darkbg/90 border border-gray-900 rounded-2xl p-5 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap" id="retrievedContent"></div>
-            
-            <div id="attachedMediaView" class="hidden mb-6 p-4 rounded-2xl bg-darkbg border border-gray-900">
-                <p class="text-xs text-accent font-semibold mb-3 flex items-center gap-2"><i class="fa-solid fa-paperclip"></i> Attached Secure Media</p>
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-cardbg border border-gray-900">
-                    <i class="fa-solid fa-file-video text-2xl text-neonpurple"></i>
-                    <div class="flex-grow">
-                        <p id="mediaName" class="text-sm font-medium text-gray-200">file.mp4</p>
-                        <p class="text-xs text-gray-400">Encrypted Stream</p>
-                    </div>
-                </div>
-            </div>
 
             <div id="burnActionArea" class="flex items-center justify-between flex-wrap gap-4">
                 <p class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message delivered safely. Reader can choose when to burn it.</p>
@@ -99,12 +88,11 @@
                             <span>Attach Files, Images & Videos (Pro Feature)</span>
                             <span class="text-xs text-amber-400 font-medium cursor-pointer hover:underline flex items-center gap-1" onclick="openPricingModal()"><i class="fa-solid fa-crown"></i> Unlock 4GB Support</span>
                         </label>
-                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="handleMediaUploadClick()">
-                            <input type="file" id="mediaFile" class="hidden">
+                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="openPricingModal()">
                             <div class="w-12 h-12 mx-auto rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-lock text-xl"></i>
                             </div>
-                            <p id="fileNameDisplay" class="text-sm font-medium text-gray-300">Media Upload is locked for Free users. Click to Upgrade to Pro.</p>
+                            <p class="text-sm font-medium text-gray-300">Media Upload is locked for Free users. Click to Upgrade to Pro.</p>
                         </div>
                     </div>
 
@@ -114,14 +102,15 @@
                         </button>
                     </div>
 
+                    <!-- RESULT & COPY LINK BOX -->
                     <div id="resultBox" class="hidden mt-6 p-5 rounded-2xl bg-darkbg border border-emerald-500/30">
                         <div class="flex items-center justify-between mb-2">
-                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Encrypted Link Generated</p>
+                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Encrypted Link Generated Successfully</p>
                         </div>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
                             <input type="text" id="shareableLink" readonly class="w-full bg-cardbg border border-gray-900 rounded-xl px-4 py-2.5 text-sm text-gray-300 font-mono focus:outline-none select-all">
-                            <button onclick="copyLink()" id="copyBtn" class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer border border-gray-800">
-                                <i class="fa-regular fa-copy"></i> Copy
+                            <button onclick="copyLink()" id="copyBtn" class="bg-cyan-500 hover:bg-cyan-400 text-black px-5 py-2.5 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md shadow-cyan-500/20">
+                                <i class="fa-regular fa-copy"></i> Copy Link
                             </button>
                         </div>
                     </div>
@@ -241,8 +230,6 @@
         const retrievedContent = document.getElementById('retrievedContent');
         const viewPolicyBadge = document.getElementById('viewPolicyBadge');
         const burnActionArea = document.getElementById('burnActionArea');
-        const attachedMediaView = document.getElementById('attachedMediaView');
-        const mediaName = document.getElementById('mediaName');
         
         const projectCountBadge = document.getElementById('projectCountBadge');
         const pricingModal = document.getElementById('pricingModal');
@@ -302,10 +289,6 @@
             pricingModal.classList.add('hidden');
         }
 
-        function handleMediaUploadClick() {
-            openPricingModal();
-        }
-
         function simulateProPurchase(planName) {
             alert(`Thank you for choosing Rummaina Pro (${planName})! Pro access activated successfully on this browser.`);
             localStorage.setItem('rummaina_is_pro', 'true');
@@ -353,7 +336,7 @@
             starsBtns.forEach(btn => {
                 const starVal = parseInt(btn.getAttribute('data-star'));
                 if(starVal <= stars) {
-                    btn.classList.0 && btn.classList.remove('text-gray-600');
+                    btn.classList.remove('text-gray-600');
                     btn.classList.add('text-amber-400');
                 } else {
                     btn.classList.remove('text-amber-400');
@@ -405,9 +388,9 @@
             shareableLink.select();
             shareableLink.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(shareableLink.value);
-            copyBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Copied!';
+            copyBtn.innerHTML = '<i class="fa-solid fa-check text-black"></i> Copied!';
             setTimeout(() => {
-                copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+                copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link';
             }, 2000);
         }
 
@@ -418,7 +401,6 @@
             retrievedContent.textContent = "🔥 Success! You have permanently burned and wiped out this note.";
             retrievedContent.classList.remove('text-gray-200');
             retrievedContent.classList.add('text-emerald-400', 'font-bold');
-            attachedMediaView.classList.add('hidden');
             viewPolicyBadge.textContent = 'Destroyed Forever';
             burnActionArea.style.display = 'none';
         }
