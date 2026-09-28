@@ -289,14 +289,14 @@
             charCount.textContent = `${secretInput.value.length} characters`;
         });
 
-        // 1. Fetch Message from Backend (Without instant auto-deletion unless requested)
+        // 1. Fetch Message from Backend (True Burn-on-Read: Fetches and deletes instantly on server)
         async function fetchMessageFromServer(messageId) {
             try {
                 const response = await fetch(`/api/message/${messageId}`);
                 const data = await response.json();
 
                 if (!response.ok) {
-                    retrievedContent.textContent = data.error || "This message does not exist or has already been burned!";
+                    retrievedContent.textContent = data.error || "🔥 Yeh message pehle hi burn ho chuka hai ya exist nahi karta!";
                     retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
                     return;
                 }
@@ -305,7 +305,7 @@
 
                 // Trigger AI Voice Warning
                 if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance("Warning. Secure message loaded.");
+                    const utterance = new SpeechSynthesisUtterance("Warning. Secure message loaded and burned from server.");
                     utterance.rate = 1.0;
                     window.speechSynthesis.speak(utterance);
                 }
@@ -314,7 +314,7 @@
             }
         }
 
-        // 2. Create Secure Link (Sends data to backend instead of URL hash)
+        // 2. Create Secure Link
         async function createSecureLink() {
             const textValue = secretInput.value.trim();
             if(!textValue) {
@@ -324,7 +324,7 @@
             }
 
             try {
-                // Backend endpoint sim call to save message and get ID
+                // Backend API call to save message and get generated ID
                 // const res = await fetch('/api/create-message', {
                 //     method: 'POST',
                 //     headers: { 'Content-Type': 'application/json' },
@@ -332,8 +332,8 @@
                 // });
                 // const data = await res.json();
                 
-                // Simulating ID generation for client preview:
-                const fakeId = Math.random().toString(36.substring(2, 9)); 
+                // Fallback simulation ID for previewing:
+                const fakeId = Math.random().toString(36).substring(2, 9); 
 
                 let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
                 projects += 1;
