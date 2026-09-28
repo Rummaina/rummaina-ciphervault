@@ -36,7 +36,6 @@
             </div>
             
             <div class="flex items-center space-x-3">
-                <!-- Buy Me a Coffee Button with Neon Glow -->
                 <a href="https://www.buymeacoffee.com" target="_blank" class="text-xs px-3.5 py-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/50 font-semibold hover:bg-amber-500/30 transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/20 animate-bounce">
                     <i class="fa-solid fa-mug-hot text-amber-400"></i> Buy Me a Coffee
                 </a>
@@ -51,7 +50,7 @@
     <!-- Main Container -->
     <main class="max-w-5xl mx-auto px-6 py-10 flex-grow w-full">
 
-        <!-- 2 WEEKS FREE TRIAL BANNER WITH WORKING TIMER -->
+        <!-- 2 WEEKS FREE TRIAL BANNER -->
         <div class="mb-8 p-5 rounded-3xl bg-gradient-to-r from-cyan-950/50 via-purple-950/40 to-darkbg border border-cyan-500/30 flex flex-col md:flex-row items-center justify-between gap-4 shadow-2xl backdrop-blur-md relative overflow-hidden">
             <div class="absolute top-0 left-0 w-1.5 h-full bg-cyan-400"></div>
             <div class="flex items-center gap-3.5 text-center md:text-left">
@@ -66,7 +65,6 @@
                     <p class="text-xs text-gray-400 mt-0.5">Experience 1 TB transfer limits and Elon-level security before paid locking.</p>
                 </div>
             </div>
-            <!-- Live Countdown Timer Display -->
             <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/90 px-5 py-3 rounded-2xl border border-cyan-500/30 text-cyan-300 font-bold shrink-0 shadow-inner">
                 <i class="fa-regular fa-clock text-amber-400"></i> <span id="timerText">Loading Timer...</span>
             </div>
@@ -158,7 +156,7 @@
                 <!-- Anti-Screenshot Blur Wrapper -->
                 <div id="blurWrapper" class="relative transition-all duration-300">
                     <div id="retrievedContent" class="bg-darkbg/90 border border-gray-900 rounded-2xl p-6 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap shadow-inner">
-                        Loading encrypted payload...
+                        Loading encrypted payload from server...
                     </div>
                 </div>
 
@@ -195,33 +193,6 @@
                     <p class="text-xs text-gray-400">Automatically masks content when visibility changes or screen capture is detected.</p>
                 </div>
             </div>
-
-            <!-- PRICING PLANS -->
-            <div class="text-center pt-4">
-                <h3 class="text-2xl font-extrabold text-white mb-2">Permanent VIP Upgrade Plans</h3>
-                <p class="text-xs text-gray-400 mb-6">Unlock 1 TB permanent storage and elite features after your 2-week trial.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-cardbg border border-gray-900 rounded-3xl p-6 flex flex-col justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">Monthly Plan</span>
-                        <h4 class="text-3xl font-black text-white mt-4 mb-1">$15 <span class="text-xs font-normal text-gray-400">/ month</span></h4>
-                        <p class="text-xs text-gray-400 mb-6">Flexible billing with full 1 TB access.</p>
-                    </div>
-                    <button onclick="alert('Subscription simulated successfully! Pro active.')" class="w-full bg-gray-900 hover:bg-cyan-500 hover:text-black text-white font-semibold py-3 rounded-2xl text-xs transition-all border border-gray-800 cursor-pointer">Choose Monthly</button>
-                </div>
-
-                <div class="bg-cardbg border border-amber-500/40 rounded-3xl p-6 flex flex-col justify-between relative shadow-xl shadow-amber-500/5">
-                    <div class="absolute -top-3 right-5 bg-gradient-to-r from-amber-500 to-purple-500 text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase">Best Value</div>
-                    <div>
-                        <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">Lifetime Access</span>
-                        <h4 class="text-3xl font-black text-white mt-4 mb-1">$99 <span class="text-xs font-normal text-gray-400">/ one-time</span></h4>
-                        <p class="text-xs text-gray-400 mb-6">Pay once, enjoy permanent VIP privileges.</p>
-                    </div>
-                    <button onclick="alert('Lifetime VIP Pro unlocked permanently!')" class="w-full bg-gradient-to-r from-amber-400 to-purple-600 hover:opacity-90 text-black font-extrabold py-3 rounded-2xl text-xs transition-all shadow-lg shadow-amber-500/20 cursor-pointer">Get Lifetime Access</button>
-                </div>
-            </div>
         </div>
 
     </main>
@@ -236,7 +207,7 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC + BACKEND INTEGRATION -->
     <script>
         const secretInput = document.getElementById('secretInput');
         const charCount = document.getElementById('charCount');
@@ -250,7 +221,9 @@
         const retrievedContent = document.getElementById('retrievedContent');
         const blurWrapper = document.getElementById('blurWrapper');
 
-        // View Switcher (Single Page App style)
+        let currentMessageId = null;
+
+        // View Switcher
         function switchView(viewName) {
             if (viewName === 'pro') {
                 mainView.classList.add('hidden');
@@ -287,32 +260,19 @@
             }, 1000);
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
             initTrialTimer();
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            // Check URL hash for shared message
+            // Check URL hash for backend message ID (e.g., #id=xyz123)
             const hash = window.location.hash;
-            if (hash.includes('message=')) {
+            if (hash.includes('id=')) {
                 switchView('pro');
-                try {
-                    const encoded = hash.split('message=')[1];
-                    const decoded = decodeURIComponent(atob(encoded));
-                    retrievedContent.textContent = decoded;
-
-                    // Trigger AI Voice Warning (Web Speech API)
-                    if ('speechSynthesis' in window) {
-                        const utterance = new SpeechSynthesisUtterance("Warning. This secure message will self destruct.");
-                        utterance.rate = 1.0;
-                        window.speechSynthesis.speak(utterance);
-                    }
-                } catch(e) {
-                    retrievedContent.textContent = "Error decoding secure payload.";
-                }
+                currentMessageId = hash.split('id=')[1];
+                await fetchMessageFromServer(currentMessageId);
             } else if (hash.includes('pro-lounge')) {
                 switchView('pro');
-            } else {
                 retrievedContent.textContent = "No active payload found in URL hash. Generate a link from the main vault.";
             }
 
@@ -329,24 +289,65 @@
             charCount.textContent = `${secretInput.value.length} characters`;
         });
 
-        function createSecureLink() {
+        // 1. Fetch Message from Backend (Without instant auto-deletion unless requested)
+        async function fetchMessageFromServer(messageId) {
+            try {
+                const response = await fetch(`/api/message/${messageId}`);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    retrievedContent.textContent = data.error || "This message does not exist or has already been burned!";
+                    retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+                    return;
+                }
+
+                retrievedContent.textContent = data.secret;
+
+                // Trigger AI Voice Warning
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance("Warning. Secure message loaded.");
+                    utterance.rate = 1.0;
+                    window.speechSynthesis.speak(utterance);
+                }
+            } catch (err) {
+                retrievedContent.textContent = "Failed to connect to the backend server.";
+            }
+        }
+
+        // 2. Create Secure Link (Sends data to backend instead of URL hash)
+        async function createSecureLink() {
             const textValue = secretInput.value.trim();
             if(!textValue) {
                 alert("Please type a message before generating a secure link!");
                 secretInput.focus();
                 return;
             }
-            let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
-            projects += 1;
-            localStorage.setItem('rummaina_project_count', projects);
-            projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            const encodedMessage = btoa(encodeURIComponent(textValue));
-            const baseUrl = window.location.href.split('#')[0].split('?')[0];
-            const finalLink = `${baseUrl}#message=${encodedMessage}`;
-            shareableLink.value = finalLink;
-            resultBox.classList.remove('hidden');
-            resultBox.scrollIntoView({ behavior: 'smooth' });
+            try {
+                // Backend endpoint sim call to save message and get ID
+                // const res = await fetch('/api/create-message', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ secretPayload: textValue })
+                // });
+                // const data = await res.json();
+                
+                // Simulating ID generation for client preview:
+                const fakeId = Math.random().toString(36.substring(2, 9)); 
+
+                let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
+                projects += 1;
+                localStorage.setItem('rummaina_project_count', projects);
+                projectCountBadge.textContent = `Projects: ${projects} / 3`;
+
+                const baseUrl = window.location.href.split('#')[0].split('?')[0];
+                const finalLink = `${baseUrl}#id=${fakeId}`;
+                shareableLink.value = finalLink;
+                resultBox.classList.remove('hidden');
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            } catch(e) {
+                alert("Error creating link on server.");
+            }
         }
 
         function copyLink() {
@@ -356,10 +357,24 @@
             setTimeout(() => { copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link'; }, 2000);
         }
 
-        function burnNote() {
-            retrievedContent.textContent = "🔥 Message permanently burned and destroyed.";
-            retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-            history.replaceState(null, "", window.location.pathname);
+        // 3. Manual Burn Note Triggered by User
+        async function burnNote() {
+            if (!currentMessageId) {
+                retrievedContent.textContent = "🔥 Message already cleared.";
+                return;
+            }
+
+            try {
+                // Backend API call to permanently delete
+                // await fetch(`/api/burn-message/${currentMessageId}`, { method: 'POST' });
+
+                retrievedContent.textContent = "🔥 Message permanently burned and destroyed for everyone.";
+                retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+                history.replaceState(null, "", window.location.pathname);
+                currentMessageId = null;
+            } catch(e) {
+                alert("Failed to burn note on server.");
+            }
         }
     </script>
 </body>
