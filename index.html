@@ -47,16 +47,16 @@
     <!-- Main Container -->
     <main class="max-w-5xl mx-auto px-6 py-12 flex-grow w-full">
         
-        <!-- View Mode Box (Jab bhi koi link kholega - Sender ya Receiver) -->
+        <!-- View Mode Box (Receiver / Reader View) -->
         <div id="viewModeBox" class="hidden mb-10 p-8 rounded-3xl bg-cardbg border border-cyan-500/30 shadow-2xl shadow-cyan-500/5">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message</h2>
-                <span class="text-xs bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full border border-cyan-500/20">Securely Received</span>
+                <h2 id="viewModeTitle" class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message</h2>
+                <span id="viewPolicyBadge" class="text-xs bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full border border-cyan-500/20">Securely Received</span>
             </div>
             <div class="bg-darkbg/90 border border-gray-900 rounded-2xl p-5 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap" id="retrievedContent"></div>
 
             <div class="flex items-center justify-between flex-wrap gap-4">
-                <p class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message successfully loaded from link.</p>
+                <p id="viewModeInfo" class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message successfully loaded from link.</p>
                 <div class="flex items-center gap-3">
                     <a href="./" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-sm flex items-center gap-2 cursor-pointer">
                         <i class="fa-solid fa-plus"></i> Create New Note
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <!-- Creator Mode Box -->
+        <!-- Creator Mode Box (Sender View) -->
         <div id="creatorModeBox">
             <div class="text-center mb-10">
                 <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Rummaina Encrypted Note & Media <br><span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">Secure Sharing Without Limits</span></h1>
@@ -223,7 +223,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic (URL Hash-Only Clean Approach) -->
+    <!-- JavaScript Logic (Robust Anti-Cache & Burn Handling) -->
     <script>
         const secretInput = document.getElementById('secretInput');
         const charCount = document.getElementById('charCount');
@@ -233,6 +233,9 @@
         const viewModeBox = document.getElementById('viewModeBox');
         const creatorModeBox = document.getElementById('creatorModeBox');
         const retrievedContent = document.getElementById('retrievedContent');
+        const viewModeTitle = document.getElementById('viewModeTitle');
+        const viewPolicyBadge = document.getElementById('viewPolicyBadge');
+        const viewModeInfo = document.getElementById('viewModeInfo');
         
         const projectCountBadge = document.getElementById('projectCountBadge');
         const pricingModal = document.getElementById('pricingModal');
@@ -262,20 +265,31 @@
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            // Check URL Hash for message payload
+            // Check URL Hash for message payload or burn status
             const hashValue = window.location.hash;
-            if(hashValue && hashValue.includes('message=')) {
-                try {
-                    const encodedData = hashValue.split('message=')[1];
-                    const decodedMessage = decodeURIComponent(atob(encodedData));
-                    
-                    creatorModeBox.classList.add('hidden');
-                    viewModeBox.classList.remove('hidden');
-                    retrievedContent.textContent = decodedMessage;
-                } catch(e) {
-                    retrievedContent.textContent = "Error: Invalid or corrupted secure link.";
-                    creatorModeBox.classList.add('hidden');
-                    viewModeBox.classList.remove('hidden');
+            if(hashValue) {
+                creatorModeBox.classList.add('hidden');
+                viewModeBox.classList.remove('hidden');
+
+                if(hashValue.includes('status=burned')) {
+                    // Receiver view when sender burned/deleted the message
+                    viewModeTitle.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-red-500"></i> Message Revoked`;
+                    viewPolicyBadge.textContent = "Deleted by Sender";
+                    viewPolicyBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20";
+                    retrievedContent.textContent = "This message has been deleted by sender.";
+                    retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-5 font-mono text-sm text-red-400 mb-6 select-all whitespace-pre-wrap";
+                    viewModeInfo.innerHTML = `<i class="fa-solid fa-circle-info text-red-400"></i> The sender has permanently destroyed this secure link.`;
+                } else if(hashValue.includes('message=')) {
+                    try {
+                        const encodedData = hashValue.split('message=')[1];
+                        const decodedMessage = decodeURIComponent(atob(encodedData));
+                        
+                        viewModeTitle.innerHTML = `<i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message (Receiver View)`;
+                        viewPolicyBadge.textContent = "Securely Received";
+                        retrievedContent.textContent = decodedMessage;
+                    } catch(e) {
+                        retrievedContent.textContent = "Error: Invalid or corrupted secure link.";
+                    }
                 }
             }
         });
@@ -393,7 +407,12 @@
         }
 
         function burnNoteNow() {
-            window.location.href = window.location.pathname;
+            // Completely wipe out history state and hash so page back/refresh never shows message again
+            const baseUrl = window.location.href.split('#')[0].split('?')[0];
+            const burnedUrl = `${baseUrl}#status=burned`;
+            
+            history.replaceState(null, "", burnedUrl);
+            window.location.replace(burnedUrl);
         }
     </script>
 </body>
