@@ -47,18 +47,18 @@
     <!-- Main Container -->
     <main class="max-w-5xl mx-auto px-6 py-12 flex-grow w-full">
         
-        <!-- View Mode Box -->
+        <!-- View Mode Box (Jab doosra banda link kholega) -->
         <div id="viewModeBox" class="hidden mb-10 p-8 rounded-3xl bg-cardbg border border-cyan-500/30 shadow-2xl shadow-cyan-500/5">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message</h2>
-                <span id="viewPolicyBadge" class="text-xs bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full border border-cyan-500/20">Reader Control Active</span>
+                <span id="viewPolicyBadge" class="text-xs bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full border border-cyan-500/20">Securely Received</span>
             </div>
             <div class="bg-darkbg/90 border border-gray-900 rounded-2xl p-5 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap" id="retrievedContent"></div>
 
             <div id="burnActionArea" class="flex items-center justify-between flex-wrap gap-4">
-                <p class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message delivered safely. Reader can choose when to burn it.</p>
+                <p class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message successfully delivered to recipient.</p>
                 <button onclick="burnNoteNow()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-all text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-red-600/20">
-                    <i class="fa-solid fa-fire"></i> Burn Note Permanently
+                    <i class="fa-solid fa-fire"></i> Clear From Screen
                 </button>
             </div>
         </div>
@@ -218,7 +218,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Logic (Hash-based direct data passing) -->
     <script>
         const secretInput = document.getElementById('secretInput');
         const charCount = document.getElementById('charCount');
@@ -242,7 +242,6 @@
         const successArea = document.getElementById('successArea');
         const editFeedbackBtn = document.getElementById('editFeedbackBtn');
 
-        let activeNoteId = null;
         let currentRating = 0;
         let hasEdited = false;
 
@@ -260,19 +259,18 @@
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const noteId = urlParams.get('note');
-
-            if(noteId) {
-                activeNoteId = noteId;
-                const storedData = localStorage.getItem(`vault_${noteId}`);
-                if(storedData) {
+            // Check if URL contains hash data (encrypted payload for recipient)
+            const hashValue = window.location.hash;
+            if(hashValue && hashValue.includes('secret=')) {
+                try {
+                    const encodedData = hashValue.split('secret=')[1];
+                    const decodedMessage = decodeURIComponent(atob(encodedData));
+                    
                     creatorModeBox.classList.add('hidden');
                     viewModeBox.classList.remove('hidden');
-                    const parsed = JSON.parse(storedData);
-                    retrievedContent.textContent = parsed.content;
-                } else {
-                    window.location.href = window.location.pathname;
+                    retrievedContent.textContent = decodedMessage;
+                } catch(e) {
+                    retrievedContent.textContent = "Error: Invalid or corrupted secure link.";
                 }
             }
         });
@@ -308,15 +306,10 @@
             localStorage.setItem('rummaina_project_count', projects);
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            const uniqueId = Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 8);
+            // Encode message into Base64 and put inside URL Hash so recipient receives it instantly
+            const encodedMessage = btoa(encodeURIComponent(textValue));
             const currentUrl = window.location.href.split('#')[0].split('?')[0];
-            const finalLink = `${currentUrl}?note=${uniqueId}`;
-
-            const noteData = {
-                content: textValue,
-                created: Date.now()
-            };
-            localStorage.setItem(`vault_${uniqueId}`, JSON.stringify(noteData));
+            const finalLink = `${currentUrl}#secret=${encodedMessage}`;
 
             shareableLink.value = finalLink;
             resultBox.classList.remove('hidden');
@@ -395,14 +388,7 @@
         }
 
         function burnNoteNow() {
-            if(activeNoteId) {
-                localStorage.removeItem(`vault_${activeNoteId}`);
-            }
-            retrievedContent.textContent = "🔥 Success! You have permanently burned and wiped out this note.";
-            retrievedContent.classList.remove('text-gray-200');
-            retrievedContent.classList.add('text-emerald-400', 'font-bold');
-            viewPolicyBadge.textContent = 'Destroyed Forever';
-            burnActionArea.style.display = 'none';
+            window.location.href = window.location.pathname;
         }
     </script>
 </body>
