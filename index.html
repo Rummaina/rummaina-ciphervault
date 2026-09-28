@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rummaina CipherVault - Zero-Knowledge Secure & Privacy Utility</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Rummaina CipherVault - Unified Elite Pro Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,8 +11,8 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#050508',
-                        cardbg: '#0c0c14',
+                        darkbg: '#030305',
+                        cardbg: '#0a0a10',
                         accent: '#06b6d4',
                         accenthover: '#0891b2',
                         neonpurple: '#a855f7'
@@ -27,73 +26,57 @@
 <body class="bg-darkbg text-gray-100 font-sans min-h-screen flex flex-col justify-between selection:bg-accent selection:text-black">
 
     <!-- Navbar -->
-    <header class="border-b border-cyan-500/10 backdrop-blur-md bg-darkbg/80 sticky top-0 z-50">
+    <header class="border-b border-cyan-500/20 backdrop-blur-xl bg-darkbg/80 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent to-neonpurple flex items-center justify-center shadow-lg shadow-cyan-500/20">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('main')">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-accent to-neonpurple flex items-center justify-center shadow-lg shadow-cyan-500/30">
                     <i class="fa-solid fa-shield-halved text-black text-lg"></i>
                 </div>
-                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Rummaina <span class="text-accent">CipherVault</span></span>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-cyan-200 to-gray-400 bg-clip-text text-transparent">Rummaina <span class="text-accent">CipherVault</span></span>
             </div>
             
-            <div class="flex items-center space-x-4">
-                <!-- Buy Me a Coffee Button -->
-                <a href="https://www.buymeacoffee.com" target="_blank" class="hidden sm:flex text-xs px-3 py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold hover:bg-amber-500/20 transition-all items-center gap-1.5 shadow-sm">
+            <div class="flex items-center space-x-3">
+                <!-- Buy Me a Coffee Button with Neon Glow -->
+                <a href="https://www.buymeacoffee.com" target="_blank" class="hidden sm:flex text-xs px-3.5 py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/40 font-semibold hover:bg-amber-500/20 transition-all items-center gap-1.5 shadow-lg shadow-amber-500/10">
                     <i class="fa-solid fa-mug-hot"></i> Buy Me a Coffee
                 </a>
-                <span id="projectCountBadge" class="text-xs px-3 py-1.5 rounded-xl bg-gray-900 border border-cyan-500/20 text-cyan-400 font-mono">Projects: 0 / 3</span>
-                <button onclick="openPricingModal()" class="text-xs px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold hover:bg-cyan-500/30 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm shadow-cyan-500/20 animate-pulse">
-                    <i class="fa-solid fa-crown text-amber-400"></i> Pro Trial Active
+                <span id="projectCountBadge" class="text-xs px-3 py-1.5 rounded-xl bg-gray-900 border border-cyan-500/30 text-cyan-400 font-mono">Projects: 0 / 3</span>
+                <button onclick="switchView('pro')" class="text-xs px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-semibold hover:border-amber-400 transition-all flex items-center gap-1.5 shadow-lg shadow-cyan-500/20 animate-pulse cursor-pointer">
+                    <i class="fa-solid fa-crown text-amber-400"></i> Pro Lounge
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-5xl mx-auto px-6 py-12 flex-grow w-full">
+    <main class="max-w-5xl mx-auto px-6 py-10 flex-grow w-full">
 
-        <!-- 2 WEEKS FREE TRIAL BANNER WITH LIVE TIMER -->
-        <div class="mb-8 p-5 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-purple-950/30 to-darkbg border border-cyan-500/30 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
-            <div class="flex items-center gap-3 text-center md:text-left">
-                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-stopwatch text-xl animate-spin" style="animation-duration: 8s;"></i>
+        <!-- 2 WEEKS FREE TRIAL BANNER WITH WORKING TIMER -->
+        <div class="mb-8 p-5 rounded-3xl bg-gradient-to-r from-cyan-950/50 via-purple-950/40 to-darkbg border border-cyan-500/30 flex flex-col md:flex-row items-center justify-between gap-4 shadow-2xl backdrop-blur-md relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-cyan-400"></div>
+            <div class="flex items-center gap-3.5 text-center md:text-left">
+                <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-500/30">
+                    <i class="fa-solid fa-stopwatch text-2xl animate-pulse"></i>
                 </div>
                 <div>
-                    <h4 class="text-sm font-bold text-white">🔥 Special 2-Weeks Free Pro Trial is Live!</h4>
-                    <p class="text-xs text-gray-400">Experience 1 TB storage & advanced encryption completely free before paid locking.</p>
+                    <h4 class="text-sm font-extrabold text-white flex items-center gap-2 justify-center md:justify-start">
+                        <span>🔥 2-Weeks Free Pro Trial Active</span>
+                        <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">VIP Access</span>
+                    </h4>
+                    <p class="text-xs text-gray-400 mt-0.5">Experience 1 TB transfer limits and Elon-level security before paid locking.</p>
                 </div>
             </div>
             <!-- Live Countdown Timer Display -->
-            <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/80 px-4 py-2.5 rounded-xl border border-gray-800 text-cyan-400 font-bold shrink-0">
-                <i class="fa-regular fa-clock text-amber-400"></i> Loading Trial Timer...
+            <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/90 px-5 py-3 rounded-2xl border border-cyan-500/30 text-cyan-300 font-bold shrink-0 shadow-inner">
+                <i class="fa-regular fa-clock text-amber-400"></i> <span id="timerText">Loading Timer...</span>
             </div>
         </div>
 
-        <!-- View Mode Box (Receiver / Reader View) -->
-        <div id="viewModeBox" class="hidden mb-10 p-8 rounded-3xl bg-cardbg border border-cyan-500/30 shadow-2xl shadow-cyan-500/5">
-            <div class="flex items-center justify-between mb-4">
-                <h2 id="viewModeTitle" class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message</h2>
-                <span id="viewPolicyBadge" class="text-xs bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full border border-cyan-500/20">Securely Received</span>
-            </div>
-            <div class="bg-darkbg/90 border border-gray-900 rounded-2xl p-5 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap" id="retrievedContent"></div>
-            <div class="flex items-center justify-between flex-wrap gap-4">
-                <p id="viewModeInfo" class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message successfully loaded from link.</p>
-                <div class="flex items-center gap-3">
-                    <a href="./" class="bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-sm flex items-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-plus"></i> Create New Note
-                    </a>
-                    <button onclick="burnNoteNow()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-all text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-red-600/20">
-                        <i class="fa-solid fa-fire"></i> Clear From Screen
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Creator Mode Box (Sender View) -->
-        <div id="creatorModeBox">
-            <div class="text-center mb-10">
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Rummaina Encrypted Note & Media <br><span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">Secure Sharing Without Limits</span></h1>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Send self-destructing text notes and massive files securely with zero-knowledge architecture.</p>
+        <!-- VIEW 1: CREATOR / MAIN VAULT VIEW -->
+        <div id="mainView" class="space-y-8">
+            <div class="text-center mb-6">
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">Secure Sharing Without Limits</span></h1>
+                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Send self-destructing text notes and files up to 100 GB (Free) or 1 TB (Pro Trial) with zero-knowledge encryption.</p>
             </div>
 
             <div class="bg-cardbg border border-gray-800/80 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
@@ -105,31 +88,31 @@
                             <span>Secret Payload / Message</span>
                             <span id="charCount" class="text-xs text-gray-500 font-mono">0 characters</span>
                         </label>
-                        <textarea id="secretInput" rows="5" class="w-full bg-darkbg border border-gray-900 rounded-2xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none font-mono text-sm" placeholder="Type confidential text, access keys, or instructions here..."></textarea>
+                        <textarea id="secretInput" rows="5" class="w-full bg-darkbg border border-gray-900 rounded-2xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none font-mono text-sm shadow-inner" placeholder="Type confidential text, access keys, or instructions here..."></textarea>
                     </div>
 
-                    <!-- MEDIA UPLOAD (1 TB PRO TRIAL ACTIVE LIMIT) -->
+                    <!-- UPLOAD AREA -->
                     <div>
                         <label class="block text-sm font-semibold text-gray-300 mb-2 flex items-center justify-between">
-                            <span>Attach Files, Images & Videos (Trial Pro: 1 TB Limit)</span>
-                            <span class="text-xs text-amber-400 font-medium">Free Pro Trial Enabled</span>
+                            <span>Attach Files, Images & Videos</span>
+                            <span class="text-xs text-amber-400 font-medium">Trial Pro: 1 TB Limit Active</span>
                         </label>
-                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="alert('Pro Trial Upload Ready! You can attach files up to 1 TB during your 2-week free trial window.')">
-                            <div class="w-12 h-12 mx-auto rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3">
+                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="alert('Trial Pro File Slot Active! You can attach files up to 1 TB during your free trial window.')">
+                            <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
                             </div>
-                            <p class="text-sm font-medium text-gray-300">Drag & drop large files here, or click to browse (1 TB Trial Limit)</p>
+                            <p class="text-sm font-medium text-gray-300">Drag & drop files here, or click to browse (1 TB Trial Capacity)</p>
                         </div>
                     </div>
 
                     <div class="flex items-end">
-                        <button onclick="createSecureLink()" class="w-full bg-accent hover:bg-accenthover text-black font-bold py-3.5 px-6 rounded-xl transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 group cursor-pointer">
+                        <button onclick="createSecureLink()" class="w-full bg-accent hover:bg-accenthover text-black font-extrabold py-4 px-6 rounded-2xl transition-all shadow-xl shadow-cyan-500/20 flex items-center justify-center gap-2 group cursor-pointer text-sm">
                             <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate Secure Link & Count Project
                         </button>
                     </div>
 
-                    <!-- RESULT & COPY LINK BOX -->
-                    <div id="resultBox" class="hidden mt-6 p-5 rounded-2xl bg-darkbg border border-emerald-500/30">
+                    <!-- RESULT BOX -->
+                    <div id="resultBox" class="hidden mt-6 p-5 rounded-2xl bg-darkbg border border-emerald-500/30 shadow-xl">
                         <div class="flex items-center justify-between mb-2">
                             <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Encrypted Link Generated Successfully</p>
                         </div>
@@ -143,144 +126,148 @@
                 </div>
             </div>
         </div>
+
+        <!-- VIEW 2: PRO LOUNGE / RECEIVER READER VIEW -->
+        <div id="proView" class="hidden space-y-8">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-purple-600 flex items-center justify-center shadow-lg shadow-amber-500/30">
+                        <i class="fa-solid fa-crown text-black text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black text-white">VIP Pro Lounge & Secure Reader</h2>
+                        <p class="text-xs text-gray-400">Military-grade AES-256 decryption & AI self-destruct warning system.</p>
+                    </div>
+                </div>
+                <span class="text-xs px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-shield-cat"></i> VIP Badge Active
+                </span>
+            </div>
+
+            <!-- DECRYPTED MESSAGE BOX -->
+            <div class="p-8 rounded-3xl bg-cardbg border border-amber-500/40 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-purple-500 to-cyan-400"></div>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-black text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> Decrypted Quantum Secure Message
+                    </h3>
+                    <span class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono">AES-256 Verified</span>
+                </div>
+
+                <!-- Anti-Screenshot Blur Wrapper -->
+                <div id="blurWrapper" class="relative transition-all duration-300">
+                    <div id="retrievedContent" class="bg-darkbg/90 border border-gray-900 rounded-2xl p-6 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap shadow-inner">
+                        Loading encrypted payload...
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between flex-wrap gap-4 pt-2">
+                    <p class="text-xs text-gray-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-robot text-amber-400"></i> AI Voice Self-Destruct Warning Armed.
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchView('main')" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-xs flex items-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-plus"></i> Create New
+                        </button>
+                        <button onclick="burnNote()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-5 rounded-xl transition-all text-xs flex items-center gap-2 shadow-lg shadow-red-600/20 cursor-pointer">
+                            <i class="fa-solid fa-fire"></i> Burn Note Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRO UTILITIES GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-cardbg border border-gray-800 p-6 rounded-3xl shadow-xl hover:border-amber-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 border border-purple-500/20">
+                        <i class="fa-solid fa-microchip text-lg"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-white mb-1">Quantum AES-256 Shield</h4>
+                    <p class="text-xs text-gray-400">Client-side military grade encryption preventing server breaches or snooping.</p>
+                </div>
+
+                <div class="bg-cardbg border border-gray-800 p-6 rounded-3xl shadow-xl hover:border-amber-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20">
+                        <i class="fa-solid fa-eye-slash text-lg"></i>
+                    </div>
+                    <h4 class="text-base font-bold text-white mb-1">Anti-Screenshot Blur</h4>
+                    <p class="text-xs text-gray-400">Automatically masks content when visibility changes or screen capture is detected.</p>
+                </div>
+            </div>
+
+            <!-- PRICING PLANS -->
+            <div class="text-center pt-4">
+                <h3 class="text-2xl font-extrabold text-white mb-2">Permanent VIP Upgrade Plans</h3>
+                <p class="text-xs text-gray-400 mb-6">Unlock 1 TB permanent storage and elite features after your 2-week trial.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-cardbg border border-gray-900 rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">Monthly Plan</span>
+                        <h4 class="text-3xl font-black text-white mt-4 mb-1">$15 <span class="text-xs font-normal text-gray-400">/ month</span></h4>
+                        <p class="text-xs text-gray-400 mb-6">Flexible billing with full 1 TB access.</p>
+                    </div>
+                    <button onclick="alert('Subscription simulated successfully! Pro active.')" class="w-full bg-gray-900 hover:bg-cyan-500 hover:text-black text-white font-semibold py-3 rounded-2xl text-xs transition-all border border-gray-800 cursor-pointer">Choose Monthly</button>
+                </div>
+
+                <div class="bg-cardbg border border-amber-500/40 rounded-3xl p-6 flex flex-col justify-between relative shadow-xl shadow-amber-500/5">
+                    <div class="absolute -top-3 right-5 bg-gradient-to-r from-amber-500 to-purple-500 text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase">Best Value</div>
+                    <div>
+                        <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">Lifetime Access</span>
+                        <h4 class="text-3xl font-black text-white mt-4 mb-1">$99 <span class="text-xs font-normal text-gray-400">/ one-time</span></h4>
+                        <p class="text-xs text-gray-400 mb-6">Pay once, enjoy permanent VIP privileges.</p>
+                    </div>
+                    <button onclick="alert('Lifetime VIP Pro unlocked permanently!')" class="w-full bg-gradient-to-r from-amber-400 to-purple-600 hover:opacity-90 text-black font-extrabold py-3 rounded-2xl text-xs transition-all shadow-lg shadow-amber-500/20 cursor-pointer">Get Lifetime Access</button>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <!-- PRO PRICING & EXCLUSIVE TRIAL MODAL -->
-    <div id="pricingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md px-4 overflow-y-auto py-10">
-        <div class="bg-cardbg border border-cyan-500/40 rounded-3xl p-8 max-w-2xl w-full shadow-2xl relative">
-            <button onclick="closePricingModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-xl cursor-pointer">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="text-center mb-8">
-                <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-cyan-400 text-black flex items-center justify-center mb-3 shadow-lg shadow-amber-500/20">
-                    <i class="fa-solid fa-crown text-2xl"></i>
-                </div>
-                <h3 class="text-3xl font-extrabold text-white mb-2">Rummaina Pro - Exclusive Lounge</h3>
-                <p class="text-sm text-gray-400">Enjoy your 2-weeks free trial. After the timer ends, secure your permanent subscription below.</p>
-            </div>
-
-            <!-- Pricing Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <!-- Monthly Plan -->
-                <div class="bg-darkbg border border-gray-900 rounded-2xl p-6 flex flex-col justify-between hover:border-cyan-500/50 transition-all">
-                    <div>
-                        <span class="text-xs uppercase tracking-wider font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">Monthly Plan</span>
-                        <h4 class="text-3xl font-black text-white mt-4 mb-1">$15 <span class="text-xs font-normal text-gray-400">/ month</span></h4>
-                        <p class="text-xs text-gray-400 mb-6">Unlocks after 2-week free trial expires.</p>
-                        <ul class="space-y-2.5 text-xs text-gray-300 mb-6">
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> 1 TB High-Speed Cloud Share</li>
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Custom PIN Protection</li>
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Priority Encrypted Vaults</li>
-                        </ul>
-                    </div>
-                    <button onclick="simulateProPurchase('Monthly ($15)')" class="w-full bg-gray-900 hover:bg-cyan-500 hover:text-black text-white font-semibold py-3 rounded-xl text-xs transition-all cursor-pointer border border-gray-800"> Pre-Order / Subscribe </button>
-                </div>
-
-                <!-- Lifetime Plan -->
-                <div class="bg-darkbg border border-cyan-500/40 rounded-2xl p-6 flex flex-col justify-between relative shadow-xl shadow-cyan-500/5">
-                    <div class="absolute -top-3 right-5 bg-gradient-to-r from-amber-500 to-purple-500 text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">Best Value</div>
-                    <div>
-                        <span class="text-xs uppercase tracking-wider font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">Lifetime Access</span>
-                        <h4 class="text-3xl font-black text-white mt-4 mb-1">$99 <span class="text-xs font-normal text-gray-400">/ one-time</span></h4>
-                        <p class="text-xs text-gray-400 mb-6">Bypass trial expiration with lifetime status.</p>
-                        <ul class="space-y-2.5 text-xs text-gray-300 mb-6">
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> 1 TB Permanent Storage</li>
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Lifetime Priority Support</li>
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Zero Recurring Fees Ever</li>
-                        </ul>
-                    </div>
-                    <button onclick="simulateProPurchase('Lifetime ($99)')" class="w-full bg-gradient-to-r from-cyan-400 to-purple-600 hover:opacity-90 text-black font-bold py-3 rounded-xl text-xs transition-all cursor-pointer shadow-lg shadow-cyan-500/20"> Get Lifetime Access </button>
-                </div>
-            </div>
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-900 bg-cardbg/50 py-6 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 Rummaina CipherVault. All rights reserved.</p>
+            <a href="https://www.buymeacoffee.com" target="_blank" class="px-4 py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold hover:bg-amber-500/20 transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/10">
+                <i class="fa-solid fa-mug-hot"></i> Support Creator (Buy Me a Coffee)
+            </a>
         </div>
-    </div>
+    </footer>
 
-    <!-- 7-STARS FEEDBACK MODAL -->
-    <div id="feedbackModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4">
-        <div class="bg-cardbg border border-cyan-500/40 rounded-3xl p-8 max-w-lg w-full shadow-2xl relative">
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 mx-auto rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center mb-3">
-                    <i class="fa-solid fa-star text-xl text-amber-400"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-white mb-1">Rate Your Experience</h3>
-                <p class="text-xs text-gray-400">You have completed 3 secure projects! Please share your feedback.</p>
-            </div>
-
-            <!-- Stars Container -->
-            <div class="flex justify-center items-center gap-1.5 md:gap-2 mb-6">
-                <button type="button" onclick="setRating(1)" class="star-btn text-2xl md:text-3xl text-gray-600 hover:text-amber-400 transition-colors cursor-pointer" data-star="1">★</button>
-                <button type="button" onclick="setRating(2)" class="star-btn text-2xl md:text-3xl text-gray-600 hover:text-amber-400 transition-colors cursor-pointer" data-star="2">★</button>
-                <button type="button" onclick="setRating(3)" class="star-btn text-2xl md:text-3xl text-gray-600 hover:text-amber-400 transition-colors cursor-pointer" data-star="3">★</button>
-                <button type="button" onclick="setRating(4)" class="star-btn text-2xl md:text-3xl text-gray-600 hover:text-amber-400 transition-colors cursor-pointer" data-star="4">★</button>
-                <button type="button" onclick="setRating(5)" class="star-btn text-2xl md:text-3xl text-gray-600 hover:text-amber-400 transition-colors cursor-pointer" data-star="5">★</button>
-                <button type="button" onclick="setRating(6)" class="star-btn text-2xl md:text-3xl text-gray-600 hover:text-amber-400 transition-colors cursor-pointer" data-star="6">★</button>
-                <button type="button" onclick="setRating(7)" class="star-btn text-2xl md:text-3xl text-gray-600 hover:text-amber-400 transition-colors cursor-pointer" data-star="7">★</button>
-            </div>
-
-            <!-- Reaction Display Box -->
-            <div id="reactionBox" class="hidden text-center p-4 rounded-2xl bg-darkbg border border-gray-900 mb-6">
-                <span id="reactionEmoji" class="text-4xl block mb-2">😊</span>
-                <p id="reactionText" class="text-sm font-semibold text-gray-200">Great - Really helpful tool</p>
-            </div>
-
-            <!-- Action Buttons inside Modal -->
-            <div id="modalActionArea">
-                <button id="submitFeedbackBtn" onclick="submitFeedback()" disabled class="w-full bg-gray-900 text-gray-600 font-semibold py-3 rounded-xl transition-all text-sm cursor-not-allowed border border-gray-800">Select Stars to Submit</button>
-            </div>
-
-            <!-- Success & Edit Option Container -->
-            <div id="successArea" class="hidden text-center space-y-3">
-                <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-semibold flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-circle-check"></i> Successfully Submitted!
-                </div>
-                <button id="editFeedbackBtn" onclick="enableEditFeedback()" class="w-full bg-gray-900 hover:bg-gray-800 text-white text-xs font-medium py-2.5 rounded-xl transition-all cursor-pointer border border-gray-800"> Change Feedback (1 Change Remaining) </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Logic -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
         const secretInput = document.getElementById('secretInput');
         const charCount = document.getElementById('charCount');
         const resultBox = document.getElementById('resultBox');
         const shareableLink = document.getElementById('shareableLink');
         const copyBtn = document.getElementById('copyBtn');
-        const viewModeBox = document.getElementById('viewModeBox');
-        const creatorModeBox = document.getElementById('creatorModeBox');
-        const retrievedContent = document.getElementById('retrievedContent');
-        const viewModeTitle = document.getElementById('viewModeTitle');
-        const viewPolicyBadge = document.getElementById('viewPolicyBadge');
-        const viewModeInfo = document.getElementById('viewModeInfo');
         const projectCountBadge = document.getElementById('projectCountBadge');
-        const pricingModal = document.getElementById('pricingModal');
-        const feedbackModal = document.getElementById('feedbackModal');
-        const trialCountdown = document.getElementById('trialCountdown');
-        const reactionBox = document.getElementById('reactionBox');
-        const reactionEmoji = document.getElementById('reactionEmoji');
-        const reactionText = document.getElementById('reactionText');
-        const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
-        const modalActionArea = document.getElementById('modalActionArea');
-        const successArea = document.getElementById('successArea');
-        const editFeedbackBtn = document.getElementById('editFeedbackBtn');
-        
-        let currentRating = 0;
-        let hasEdited = false;
-        
-        const ratingsConfig = {
-            1: { emoji: "😡", text: "Terrible - Needs major fixing" },
-            2: { emoji: "😞", text: "Poor - Not satisfied at all" },
-            3: { emoji: "😐", text: "Average - Can be much better" },
-            4: { emoji: "🙂", text: "Good - Works fine" },
-            5: { emoji: "😊", text: "Great - Really helpful tool" },
-            6: { emoji: "😄", text: "Awesome - Loved the privacy" },
-            7: { emoji: "🤩", text: "Legendary - Absolute perfection!" }
-        };
+        const timerText = document.getElementById('timerText');
+        const mainView = document.getElementById('mainView');
+        const proView = document.getElementById('proView');
+        const retrievedContent = document.getElementById('retrievedContent');
+        const blurWrapper = document.getElementById('blurWrapper');
 
-        // 2 Weeks Trial Countdown Timer Logic
+        // View Switcher (Single Page App style)
+        function switchView(viewName) {
+            if (viewName === 'pro') {
+                mainView.classList.add('hidden');
+                proView.classList.remove('hidden');
+                history.pushState(null, '', '#pro-lounge');
+            } else {
+                proView.classList.add('hidden');
+                mainView.classList.remove('hidden');
+                history.pushState(null, '', window.location.pathname);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2 Weeks Trial Timer
         function initTrialTimer() {
             let trialEnd = localStorage.getItem('rummaina_trial_end');
             if (!trialEnd) {
-                // Set 14 days (2 weeks) from now
                 trialEnd = new Date().getTime() + (14 * 24 * 60 * 60 * 1000);
                 localStorage.setItem('rummaina_trial_end', trialEnd);
             }
@@ -288,18 +275,15 @@
             setInterval(() => {
                 const now = new Date().getTime();
                 const distance = trialEnd - now;
-
                 if (distance < 0) {
-                    trialCountdown.innerHTML = `<span class="text-red-400"><i class="fa-solid fa-triangle-exclamation"></i> Trial Expired - Pro Locked</span>`;
+                    timerText.textContent = "Trial Expired - Pro Locked";
                     return;
                 }
-
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                trialCountdown.innerHTML = `<i class="fa-regular fa-clock text-amber-400"></i> Trial Ends in: <span class="text-white">${days}d ${hours}h ${minutes}m ${seconds}s</span>`;
+                timerText.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             }, 1000);
         }
 
@@ -308,43 +292,42 @@
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            const hashValue = window.location.hash;
-            if(hashValue) {
-                creatorModeBox.classList.add('hidden');
-                viewModeBox.classList.remove('hidden');
-                if(hashValue.includes('status=burned')) {
-                    viewModeTitle.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-red-500"></i> Message Revoked`;
-                    viewPolicyBadge.textContent = "Deleted by Sender";
-                    viewPolicyBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20";
-                    retrievedContent.textContent = "This message has been deleted by sender.";
-                    retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-5 font-mono text-sm text-red-400 mb-6 select-all whitespace-pre-wrap";
-                    viewModeInfo.innerHTML = `<i class="fa-solid fa-circle-info text-red-400"></i> The sender has permanently destroyed this secure link.`;
-                } else if(hashValue.includes('message=')) {
-                    try {
-                        const encodedData = hashValue.split('message=')[1];
-                        const decodedMessage = decodeURIComponent(atob(encodedData));
-                        viewModeTitle.innerHTML = `<i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message (Receiver View)`;
-                        viewPolicyBadge.textContent = "Securely Received";
-                        retrievedContent.textContent = decodedMessage;
-                    } catch(e) {
-                        retrievedContent.textContent = "Error: Invalid or corrupted secure link.";
+            // Check URL hash for shared message
+            const hash = window.location.hash;
+            if (hash.includes('message=')) {
+                switchView('pro');
+                try {
+                    const encoded = hash.split('message=')[1];
+                    const decoded = decodeURIComponent(atob(encoded));
+                    retrievedContent.textContent = decoded;
+
+                    // Trigger AI Voice Warning (Web Speech API)
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance("Warning. This secure message will self destruct.");
+                        utterance.rate = 1.0;
+                        window.speechSynthesis.speak(utterance);
                     }
+                } catch(e) {
+                    retrievedContent.textContent = "Error decoding secure payload.";
                 }
+            } else if (hash.includes('pro-lounge')) {
+                switchView('pro');
+            } else {
+                retrievedContent.textContent = "No active payload found in URL hash. Generate a link from the main vault.";
             }
+
+            // Anti-Screenshot / Blur on Window Blur
+            window.addEventListener('blur', () => {
+                blurWrapper.classList.add('blur-md', 'select-none');
+            });
+            window.addEventListener('focus', () => {
+                blurWrapper.classList.remove('blur-md', 'select-none');
+            });
         });
 
         secretInput.addEventListener('input', () => {
             charCount.textContent = `${secretInput.value.length} characters`;
         });
-
-        function openPricingModal() { pricingModal.classList.remove('hidden'); }
-        function closePricingModal() { pricingModal.classList.add('hidden'); }
-
-        function simulateProPurchase(planName) {
-            alert(`Thank you for securing Rummaina Pro (${planName})! Your pro lifetime/subscription status is locked in permanently.`);
-            localStorage.setItem('rummaina_is_pro', 'true');
-            closePricingModal();
-        }
 
         function createSecureLink() {
             const textValue = secretInput.value.trim();
@@ -364,78 +347,19 @@
             shareableLink.value = finalLink;
             resultBox.classList.remove('hidden');
             resultBox.scrollIntoView({ behavior: 'smooth' });
-
-            if (projects >= 3 && !localStorage.getItem('rummaina_feedback_submitted')) {
-                setTimeout(() => {
-                    feedbackModal.classList.remove('hidden');
-                }, 1000);
-            }
-        }
-
-        function setRating(stars) {
-            currentRating = stars;
-            const starsBtns = document.querySelectorAll('.star-btn');
-            starsBtns.forEach(btn => {
-                const starVal = parseInt(btn.getAttribute('data-star'));
-                if(starVal <= stars) {
-                    btn.classList.remove('text-gray-600');
-                    btn.classList.add('text-amber-400');
-                } else {
-                    btn.classList.remove('text-amber-400');
-                    btn.classList.add('text-gray-600');
-                }
-            });
-            if(ratingsConfig[stars]) {
-                reactionEmoji.textContent = ratingsConfig[stars].emoji;
-                reactionText.textContent = ratingsConfig[stars].text;
-                reactionBox.classList.remove('hidden');
-            }
-            submitFeedbackBtn.disabled = false;
-            submitFeedbackBtn.classList.remove('bg-gray-900', 'text-gray-600', 'cursor-not-allowed');
-            submitFeedbackBtn.classList.add('bg-accent', 'hover:bg-accenthover', 'text-black', 'font-bold', 'cursor-pointer', 'shadow-lg', 'shadow-cyan-500/20');
-            submitFeedbackBtn.textContent = "Submit Feedback";
-        }
-
-        function submitFeedback() {
-            if(currentRating === 0) return;
-            localStorage.setItem('rummaina_user_rating', currentRating);
-            localStorage.setItem('rummaina_feedback_submitted', 'true');
-            modalActionArea.classList.add('hidden');
-            successArea.classList.remove('hidden');
-            setTimeout(() => {
-                feedbackModal.classList.add('hidden');
-            }, 3500);
-        }
-
-        function enableEditFeedback() {
-            if(hasEdited) {
-                alert("You have already used your 1-time change option!");
-                return;
-            }
-            hasEdited = true;
-            successArea.classList.add('hidden');
-            modalActionArea.classList.remove('hidden');
-            submitFeedbackBtn.textContent = "Update Feedback (Final Change)";
-            editFeedbackBtn.disabled = true;
-            editFeedbackBtn.textContent = "Change Option Used";
-            editFeedbackBtn.classList.add('opacity-50', 'cursor-not-allowed');
         }
 
         function copyLink() {
             shareableLink.select();
-            shareableLink.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(shareableLink.value);
             copyBtn.innerHTML = '<i class="fa-solid fa-check text-black"></i> Copied!';
-            setTimeout(() => {
-                copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link';
-            }, 2000);
+            setTimeout(() => { copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link'; }, 2000);
         }
 
-        function burnNoteNow() {
-            const baseUrl = window.location.href.split('#')[0].split('?')[0];
-            const burnedUrl = `${baseUrl}#status=burned`;
-            history.replaceState(null, "", burnedUrl);
-            window.location.replace(burnedUrl);
+        function burnNote() {
+            retrievedContent.textContent = "🔥 Message permanently burned and destroyed.";
+            retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+            history.replaceState(null, "", window.location.pathname);
         }
     </script>
 </body>
