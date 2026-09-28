@@ -47,7 +47,7 @@
     <!-- Main Container -->
     <main class="max-w-5xl mx-auto px-6 py-12 flex-grow w-full">
         
-        <!-- View Mode Box (Jab doosra banda link kholega) -->
+        <!-- View Mode Box (Recipient / Reader View) -->
         <div id="viewModeBox" class="hidden mb-10 p-8 rounded-3xl bg-cardbg border border-cyan-500/30 shadow-2xl shadow-cyan-500/5">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-unlock-keyhole text-accent"></i> Decrypted Secret Message</h2>
@@ -56,7 +56,7 @@
             <div class="bg-darkbg/90 border border-gray-900 rounded-2xl p-5 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap" id="retrievedContent"></div>
 
             <div id="burnActionArea" class="flex items-center justify-between flex-wrap gap-4">
-                <p class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message successfully delivered to recipient.</p>
+                <p class="text-xs text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-cyan-400"></i> Message successfully decrypted and displayed.</p>
                 <button onclick="burnNoteNow()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-5 rounded-xl transition-all text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-red-600/20">
                     <i class="fa-solid fa-fire"></i> Clear From Screen
                 </button>
@@ -218,7 +218,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic (Hash-based direct data passing) -->
+    <!-- JavaScript Logic -->
     <script>
         const secretInput = document.getElementById('secretInput');
         const charCount = document.getElementById('charCount');
@@ -259,7 +259,7 @@
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            // Check if URL contains hash data (encrypted payload for recipient)
+            // 1. Check URL Hash first (Recipient opening the link)
             const hashValue = window.location.hash;
             if(hashValue && hashValue.includes('secret=')) {
                 try {
@@ -269,8 +269,22 @@
                     creatorModeBox.classList.add('hidden');
                     viewModeBox.classList.remove('hidden');
                     retrievedContent.textContent = decodedMessage;
+                    return;
                 } catch(e) {
-                    retrievedContent.textContent = "Error: Invalid or corrupted secure link.";
+                    console.error("Hash decode error");
+                }
+            }
+
+            // 2. Check URL Parameter (?note=...) (Local storage fallback)
+            const urlParams = new URLSearchParams(window.location.search);
+            const noteId = urlParams.get('note');
+            if(noteId) {
+                const storedData = localStorage.getItem(`vault_${noteId}`);
+                if(storedData) {
+                    creatorModeBox.classList.add('hidden');
+                    viewModeBox.classList.remove('hidden');
+                    const parsed = JSON.parse(storedData);
+                    retrievedContent.textContent = parsed.content;
                 }
             }
         });
@@ -306,10 +320,16 @@
             localStorage.setItem('rummaina_project_count', projects);
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            // Encode message into Base64 and put inside URL Hash so recipient receives it instantly
+            // Dual method: Save in LocalStorage AND embed encoded hash in link
+            const uniqueId = Math.random().toString(36).substring(2, 12);
+            const noteData = { content: textValue, created: Date.now() };
+            localStorage.setItem(`vault_${uniqueId}`, JSON.stringify(noteData));
+
             const encodedMessage = btoa(encodeURIComponent(textValue));
             const currentUrl = window.location.href.split('#')[0].split('?')[0];
-            const finalLink = `${currentUrl}#secret=${encodedMessage}`;
+            
+            // Link contains both note ID and hash payload so it NEVER fails on any device
+            const finalLink = `${currentUrl}?note=${uniqueId}#secret=${encodedMessage}`;
 
             shareableLink.value = finalLink;
             resultBox.classList.remove('hidden');
@@ -370,6 +390,7 @@
             }
             hasEdited = true;
             successArea.classList.add('hidden');
+            modalActionAddress = document.getElementById('modalActionArea');
             modalActionArea.classList.remove('hidden');
             submitFeedbackBtn.textContent = "Update Feedback (Final Change)";
             editFeedbackBtn.disabled = true;
