@@ -35,10 +35,15 @@
                 </div>
                 <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Rummaina <span class="text-accent">CipherVault</span></span>
             </div>
+            
             <div class="flex items-center space-x-4">
+                <!-- Buy Me a Coffee Button -->
+                <a href="https://www.buymeacoffee.com" target="_blank" class="hidden sm:flex text-xs px-3 py-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 font-semibold hover:bg-amber-500/20 transition-all items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-mug-hot"></i> Buy Me a Coffee
+                </a>
                 <span id="projectCountBadge" class="text-xs px-3 py-1.5 rounded-xl bg-gray-900 border border-cyan-500/20 text-cyan-400 font-mono">Projects: 0 / 3</span>
-                <button onclick="openPricingModal()" class="text-xs px-4 py-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold hover:bg-cyan-500/20 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm shadow-cyan-500/20">
-                    <i class="fa-solid fa-crown text-amber-400"></i> Upgrade Pro (1 TB)
+                <button onclick="openPricingModal()" class="text-xs px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold hover:bg-cyan-500/30 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm shadow-cyan-500/20 animate-pulse">
+                    <i class="fa-solid fa-crown text-amber-400"></i> Pro Trial Active
                 </button>
             </div>
         </div>
@@ -46,6 +51,23 @@
 
     <!-- Main Container -->
     <main class="max-w-5xl mx-auto px-6 py-12 flex-grow w-full">
+
+        <!-- 2 WEEKS FREE TRIAL BANNER WITH LIVE TIMER -->
+        <div class="mb-8 p-5 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-purple-950/30 to-darkbg border border-cyan-500/30 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+            <div class="flex items-center gap-3 text-center md:text-left">
+                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-stopwatch text-xl animate-spin" style="animation-duration: 8s;"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white">🔥 Special 2-Weeks Free Pro Trial is Live!</h4>
+                    <p class="text-xs text-gray-400">Experience 1 TB storage & advanced encryption completely free before paid locking.</p>
+                </div>
+            </div>
+            <!-- Live Countdown Timer Display -->
+            <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/80 px-4 py-2.5 rounded-xl border border-gray-800 text-cyan-400 font-bold shrink-0">
+                <i class="fa-regular fa-clock text-amber-400"></i> Loading Trial Timer...
+            </div>
+        </div>
 
         <!-- View Mode Box (Receiver / Reader View) -->
         <div id="viewModeBox" class="hidden mb-10 p-8 rounded-3xl bg-cardbg border border-cyan-500/30 shadow-2xl shadow-cyan-500/5">
@@ -71,7 +93,7 @@
         <div id="creatorModeBox">
             <div class="text-center mb-10">
                 <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Rummaina Encrypted Note & Media <br><span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">Secure Sharing Without Limits</span></h1>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Send self-destructing text notes and massive files securely with advanced zero-knowledge encryption.</p>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Send self-destructing text notes and massive files securely with zero-knowledge architecture.</p>
             </div>
 
             <div class="bg-cardbg border border-gray-800/80 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
@@ -86,17 +108,17 @@
                         <textarea id="secretInput" rows="5" class="w-full bg-darkbg border border-gray-900 rounded-2xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none font-mono text-sm" placeholder="Type confidential text, access keys, or instructions here..."></textarea>
                     </div>
 
-                    <!-- MEDIA UPLOAD (NOW SUPPORTING 100 GB FREE LIMIT) -->
+                    <!-- MEDIA UPLOAD (1 TB PRO TRIAL ACTIVE LIMIT) -->
                     <div>
                         <label class="block text-sm font-semibold text-gray-300 mb-2 flex items-center justify-between">
-                            <span>Attach Files, Images & Videos (Up to 100 GB Free)</span>
-                            <span class="text-xs text-cyan-400 font-medium">Free Tier Active</span>
+                            <span>Attach Files, Images & Videos (Trial Pro: 1 TB Limit)</span>
+                            <span class="text-xs text-amber-400 font-medium">Free Pro Trial Enabled</span>
                         </label>
-                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="alert('File upload slot ready! You can attach files up to 100 GB on the Free tier (and up to 1 TB on Pro).')">
-                            <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-3">
+                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="alert('Pro Trial Upload Ready! You can attach files up to 1 TB during your 2-week free trial window.')">
+                            <div class="w-12 h-12 mx-auto rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
                             </div>
-                            <p class="text-sm font-medium text-gray-300">Drag & drop files here, or click to browse (Limit: 100 GB)</p>
+                            <p class="text-sm font-medium text-gray-300">Drag & drop large files here, or click to browse (1 TB Trial Limit)</p>
                         </div>
                     </div>
 
@@ -123,7 +145,7 @@
         </div>
     </main>
 
-    <!-- PRO PRICING / UPGRADE MODAL (1 TB LIMIT) -->
+    <!-- PRO PRICING & EXCLUSIVE TRIAL MODAL -->
     <div id="pricingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md px-4 overflow-y-auto py-10">
         <div class="bg-cardbg border border-cyan-500/40 rounded-3xl p-8 max-w-2xl w-full shadow-2xl relative">
             <button onclick="closePricingModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-xl cursor-pointer">
@@ -133,8 +155,8 @@
                 <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-cyan-400 text-black flex items-center justify-center mb-3 shadow-lg shadow-amber-500/20">
                     <i class="fa-solid fa-crown text-2xl"></i>
                 </div>
-                <h3 class="text-3xl font-extrabold text-white mb-2">Upgrade to Rummaina Pro</h3>
-                <p class="text-sm text-gray-400">Unlock 1 TB massive media sharing, custom passwords, and unlimited secure vaults.</p>
+                <h3 class="text-3xl font-extrabold text-white mb-2">Rummaina Pro - Exclusive Lounge</h3>
+                <p class="text-sm text-gray-400">Enjoy your 2-weeks free trial. After the timer ends, secure your permanent subscription below.</p>
             </div>
 
             <!-- Pricing Cards Grid -->
@@ -144,14 +166,14 @@
                     <div>
                         <span class="text-xs uppercase tracking-wider font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">Monthly Plan</span>
                         <h4 class="text-3xl font-black text-white mt-4 mb-1">$15 <span class="text-xs font-normal text-gray-400">/ month</span></h4>
-                        <p class="text-xs text-gray-400 mb-6">For professionals needing flexible security.</p>
+                        <p class="text-xs text-gray-400 mb-6">Unlocks after 2-week free trial expires.</p>
                         <ul class="space-y-2.5 text-xs text-gray-300 mb-6">
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Up to 1 TB Media Sharing</li>
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Password Protection</li>
+                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> 1 TB High-Speed Cloud Share</li>
+                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Custom PIN Protection</li>
                             <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Priority Encrypted Vaults</li>
                         </ul>
                     </div>
-                    <button onclick="simulateProPurchase('Monthly ($15)')" class="w-full bg-gray-900 hover:bg-cyan-500 hover:text-black text-white font-semibold py-3 rounded-xl text-xs transition-all cursor-pointer border border-gray-800"> Choose Monthly </button>
+                    <button onclick="simulateProPurchase('Monthly ($15)')" class="w-full bg-gray-900 hover:bg-cyan-500 hover:text-black text-white font-semibold py-3 rounded-xl text-xs transition-all cursor-pointer border border-gray-800"> Pre-Order / Subscribe </button>
                 </div>
 
                 <!-- Lifetime Plan -->
@@ -160,11 +182,11 @@
                     <div>
                         <span class="text-xs uppercase tracking-wider font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">Lifetime Access</span>
                         <h4 class="text-3xl font-black text-white mt-4 mb-1">$99 <span class="text-xs font-normal text-gray-400">/ one-time</span></h4>
-                        <p class="text-xs text-gray-400 mb-6">Pay once, enjoy permanent high-end security.</p>
+                        <p class="text-xs text-gray-400 mb-6">Bypass trial expiration with lifetime status.</p>
                         <ul class="space-y-2.5 text-xs text-gray-300 mb-6">
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> 1 TB High-Speed Sharing</li>
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Lifetime Updates & Support</li>
-                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Zero Recurring Fees</li>
+                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> 1 TB Permanent Storage</li>
+                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Lifetime Priority Support</li>
+                            <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Zero Recurring Fees Ever</li>
                         </ul>
                     </div>
                     <button onclick="simulateProPurchase('Lifetime ($99)')" class="w-full bg-gradient-to-r from-cyan-400 to-purple-600 hover:opacity-90 text-black font-bold py-3 rounded-xl text-xs transition-all cursor-pointer shadow-lg shadow-cyan-500/20"> Get Lifetime Access </button>
@@ -232,6 +254,7 @@
         const projectCountBadge = document.getElementById('projectCountBadge');
         const pricingModal = document.getElementById('pricingModal');
         const feedbackModal = document.getElementById('feedbackModal');
+        const trialCountdown = document.getElementById('trialCountdown');
         const reactionBox = document.getElementById('reactionBox');
         const reactionEmoji = document.getElementById('reactionEmoji');
         const reactionText = document.getElementById('reactionText');
@@ -253,7 +276,35 @@
             7: { emoji: "🤩", text: "Legendary - Absolute perfection!" }
         };
 
+        // 2 Weeks Trial Countdown Timer Logic
+        function initTrialTimer() {
+            let trialEnd = localStorage.getItem('rummaina_trial_end');
+            if (!trialEnd) {
+                // Set 14 days (2 weeks) from now
+                trialEnd = new Date().getTime() + (14 * 24 * 60 * 60 * 1000);
+                localStorage.setItem('rummaina_trial_end', trialEnd);
+            }
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = trialEnd - now;
+
+                if (distance < 0) {
+                    trialCountdown.innerHTML = `<span class="text-red-400"><i class="fa-solid fa-triangle-exclamation"></i> Trial Expired - Pro Locked</span>`;
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                trialCountdown.innerHTML = `<i class="fa-regular fa-clock text-amber-400"></i> Trial Ends in: <span class="text-white">${days}d ${hours}h ${minutes}m ${seconds}s</span>`;
+            }, 1000);
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
+            initTrialTimer();
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
@@ -290,7 +341,7 @@
         function closePricingModal() { pricingModal.classList.add('hidden'); }
 
         function simulateProPurchase(planName) {
-            alert(`Thank you for choosing Rummaina Pro (${planName})! Pro access activated successfully. You now have 1 TB cloud file sharing privileges.`);
+            alert(`Thank you for securing Rummaina Pro (${planName})! Your pro lifetime/subscription status is locked in permanently.`);
             localStorage.setItem('rummaina_is_pro', 'true');
             closePricingModal();
         }
