@@ -268,6 +268,7 @@
                 const encodedPayload = hash.split('secret=')[1];
 
                 try {
+                    // Safe decoding matching Urdu/English & complex special characters
                     const decodedMessage = decodeURIComponent(escape(atob(encodedPayload)));
                     if (retrievedContent) retrievedContent.textContent = decodedMessage;
                     
@@ -316,6 +317,7 @@
             }
 
             try {
+                // Safe encoding matching Urdu/English & complex characters
                 const encodedData = btoa(unescape(encodeURIComponent(textValue)));
 
                 let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
