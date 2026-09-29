@@ -5,436 +5,469 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rummaina CipherVault - Elite Pro Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#05020a',
-                        cardbg: '#0e061b',
-                        accent: '#ec4899',
-                        accenthover: '#db2777',
-                        neonpurple: '#a855f7'
+                        brand: { 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' }
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-darkbg text-gray-100 font-sans min-h-screen flex flex-col justify-between selection:bg-accent selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between font-sans selection:bg-purple-500 selection:text-white">
 
-    <!-- Navbar -->
-    <header class="border-b border-purple-900/30 backdrop-blur-xl bg-darkbg/90 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('main')">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-accent to-neonpurple flex items-center justify-center shadow-lg shadow-purple-900/50">
-                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
-                </div>
-                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-pink-200 to-purple-300 bg-clip-text text-transparent">Rummaina <span class="text-accent">CipherVault</span></span>
-            </div>
-            
+    <!-- Top Navigation -->
+    <header class="border-b border-slate-800/60 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <a href="https://www.buymeacoffee.com" target="_blank" class="text-xs px-3.5 py-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold hover:bg-amber-500/30 transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/10 animate-bounce">
-                    <i class="fa-solid fa-mug-hot text-amber-400"></i> Buy Me a Coffee
-                </a>
-                <span id="projectCountBadge" class="text-xs px-3 py-1.5 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-300 font-mono">Vaults Created: 0</span>
-                <button type="button" onclick="switchView('pro')" class="text-xs px-4 py-2 rounded-xl bg-gradient-to-r from-purple-900/40 to-pink-900/40 text-pink-300 border border-purple-500/40 font-semibold hover:border-pink-400 transition-all flex items-center gap-1.5 shadow-lg shadow-purple-900/30 animate-pulse cursor-pointer">
-                    <i class="fa-solid fa-crown text-amber-400"></i> Pro Lounge
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <i class="fa-solid fa-vault text-white"></i>
+                </div>
+                <span class="font-bold text-lg tracking-wide bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
+                    Rummaina <span class="text-purple-400">CipherVault</span>
+                </span>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <!-- Live Website Rating Badge -->
+                <button onclick="openRatingModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 text-xs font-medium transition shadow-sm">
+                    <i class="fa-solid fa-star text-amber-400"></i>
+                    <span id="navRatingDisplay">4.9</span>
+                    <span class="text-slate-400" id="navRatingCount">(128)</span>
                 </button>
+
+                <a href="#support" class="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 hover:bg-amber-500/20 text-xs font-semibold transition">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <span>Buy Me a Coffee</span>
+                </a>
+                <div class="px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold">
+                    <i class="fa-solid fa-crown mr-1 text-amber-400"></i> Pro Lounge
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-5xl mx-auto px-6 py-10 flex-grow w-full">
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
 
-        <!-- TRIAL BANNER -->
-        <div class="mb-8 p-5 rounded-3xl bg-gradient-to-r from-[#140726] via-[#1a0833] to-darkbg border border-purple-500/30 flex flex-col md:flex-row items-center justify-between gap-4 shadow-2xl backdrop-blur-md relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-accent to-neonpurple"></div>
-            <div class="flex items-center gap-3.5 text-center md:text-left">
-                <div class="w-12 h-12 rounded-2xl bg-purple-900/30 text-pink-400 flex items-center justify-center shrink-0 border border-purple-500/30">
-                    <i class="fa-solid fa-stopwatch text-2xl animate-pulse"></i>
+        <!-- Banner / Trial Active -->
+        <div class="mb-6 bg-gradient-to-r from-purple-900/40 via-slate-900 to-slate-900 border border-purple-500/20 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+                    <i class="fa-solid fa-fire text-lg"></i>
                 </div>
                 <div>
-                    <h4 class="text-sm font-extrabold text-white flex items-center gap-2 justify-center md:justify-start">
-                        <span>🔥 2-Weeks Free Pro Trial Active</span>
-                        <span class="text-[10px] bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full border border-pink-500/30">VIP Access</span>
-                    </h4>
-                    <p class="text-xs text-gray-400 mt-0.5">Media attachments, secure voice notes & self-destructing links enabled.</p>
+                    <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                        2-Weeks Free Pro Trial Active 
+                        <span class="text-[10px] bg-purple-500 text-white px-2 py-0.5 rounded-full font-normal">VIP ACCESS</span>
+                    </h2>
+                    <p class="text-xs text-slate-400">Experience ultra-fast cloudless encryption & secure self-destructing links.</p>
                 </div>
             </div>
-            <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/90 px-5 py-3 rounded-2xl border border-purple-500/30 text-pink-300 font-bold shrink-0 shadow-inner">
-                <i class="fa-regular fa-clock text-amber-400"></i> <span id="timerText">Loading Timer...</span>
+            <div class="text-xs font-mono bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800 text-purple-300 flex items-center gap-2">
+                <i class="fa-regular fa-clock"></i> <span id="countdownTimer">12d 23h 0m 58s</span>
             </div>
         </div>
 
-        <!-- VIEW 1: MAIN VAULT VIEW -->
-        <div id="mainView" class="space-y-8">
-            <div class="text-center mb-6">
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">Text, Media & Voice Self-Destruct</span></h1>
-                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Send encrypted text, pictures, videos or recorded voice notes safely inside a single link.</p>
-            </div>
+        <!-- Normal Creator / Vault View -->
+        <div id="creatorView" class="space-y-6">
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-48 h-48 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="bg-cardbg border border-purple-900/50 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent via-neonpurple to-indigo-500"></div>
-
-                <div class="space-y-6">
+                <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-300 mb-2 flex items-center justify-between">
-                            <span>Secret Payload / Message</span>
-                            <span id="charCount" class="text-xs text-gray-500 font-mono">0 characters</span>
-                        </label>
-                        <textarea id="secretInput" rows="4" class="w-full bg-darkbg border border-purple-950/80 rounded-2xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none font-mono text-sm shadow-inner" placeholder="Type confidential message or instructions here..."></textarea>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-300">Secret Payload / Message</label>
+                            <span id="charCounter" class="text-xs text-slate-500 font-mono">0 characters</span>
+                        </div>
+                        <textarea id="secretMessage" rows="4" placeholder="Write your confidential message here..." class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-4 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 text-sm transition"></textarea>
                     </div>
 
-                    <!-- ATTACH FILES & MEDIA -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-300 mb-2 flex items-center justify-between">
-                            <span>Attach Media (Images, Videos, Audio)</span>
-                            <span class="text-xs text-amber-400 font-medium">Pro Media Slot Active</span>
-                        </label>
-                        <div id="dropZone" class="border-2 border-dashed border-purple-900/65 hover:border-accent/50 rounded-2xl p-6 text-center bg-darkbg/40 transition-all cursor-pointer relative" onclick="triggerFileInput()">
-                            <input type="file" id="realFileInput" class="hidden" accept="image/*,video/*,audio/*,.mp3,.wav,.mp4" onchange="handleFileSelected(event)">
-                            <div class="w-12 h-12 mx-auto rounded-xl bg-purple-500/10 text-pink-400 flex items-center justify-center mb-3">
-                                <i class="fa-solid fa-photo-film text-xl"></i>
+                    <!-- File Attachments & Voice Mail Integration -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- File Upload Box -->
+                        <div class="border-2 border-dashed border-slate-800 hover:border-purple-500/50 rounded-xl p-4 text-center transition bg-slate-950/40 relative flex flex-col items-center justify-center">
+                            <input type="file" id="fileInput" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleFileSelect(event)">
+                            <div class="w-9 h-9 rounded-full bg-purple-500/10 text-purple-400 flex items-center justify-center mb-2">
+                                <i class="fa-solid fa-cloud-arrow-up text-sm"></i>
                             </div>
-                            <p id="fileUploadText" class="text-sm font-medium text-gray-300">Click or Drop Image, Video or Audio file here</p>
+                            <p class="text-xs font-medium text-slate-300" id="fileLabelText">Attach Files, Images or Video</p>
+                            <span class="text-[10px] text-slate-500 mt-0.5">Trial Pro: Unlimited Secure Slot</span>
+                        </div>
+
+                        <!-- Voice Mail Recorder Box -->
+                        <div class="border border-slate-800 rounded-xl p-4 bg-slate-950/40 flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-medium text-slate-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-microphone text-purple-400"></i> Voice Mail Recorder
+                                </span>
+                                <span id="recStatus" class="text-[10px] text-slate-500 font-mono">Ready</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button id="recordBtn" onclick="toggleRecording()" class="flex-1 py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition flex items-center justify-center gap-1.5">
+                                    <i id="recIcon" class="fa-solid fa-circle text-red-500 text-[10px]"></i> <span id="recBtnText">Record Voice</span>
+                                </button>
+                                <audio id="audioPreview" controls class="hidden h-8 w-full"></audio>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex items-end">
-                        <button type="button" onclick="createSecureLink()" id="createBtn" class="w-full bg-gradient-to-r from-accent to-neonpurple hover:opacity-90 text-white font-extrabold py-4 px-6 rounded-2xl transition-all shadow-xl shadow-purple-900/40 flex items-center justify-center gap-2 group cursor-pointer text-sm">
-                            <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate Secure Encrypted Link
+                    <button onclick="generateVaultLink()" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-lg shadow-purple-600/30 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-lock"></i> Generate Secure Encrypted Link
+                    </button>
+                </div>
+
+                <!-- Generated Link Output Area -->
+                <div id="resultBox" class="hidden mt-6 pt-6 border-t border-slate-800/80 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check"></i> SECURE VAULT LINK GENERATED SUCCESSFULLY
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="generatedLinkInput" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-300 font-mono focus:outline-none">
+                        <button onclick="copyGeneratedLink()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shrink-0 transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copy Link
                         </button>
                     </div>
+                </div>
+            </div>
 
-                    <!-- RESULT BOX -->
-                    <div id="resultBox" class="hidden mt-6 p-5 rounded-2xl bg-darkbg border border-emerald-500/30 shadow-xl">
-                        <div class="flex items-center justify-between mb-2">
-                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Secure Vault Link Generated Successfully</p>
-                        </div>
-                        <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-                            <input type="text" id="shareableLink" readonly class="w-full bg-cardbg border border-purple-950 rounded-xl px-4 py-2.5 text-sm text-gray-300 font-mono focus:outline-none select-all">
-                            <button type="button" onclick="copyLink()" id="copyBtn" class="bg-accent hover:bg-accenthover text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md shadow-purple-900/30">
-                                <i class="fa-regular fa-copy"></i> Copy Link
-                            </button>
-                        </div>
+            <!-- 7-Star Feedback Section with Expressions -->
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 shadow-xl backdrop-blur-xl">
+                <div class="text-center space-y-1 mb-4">
+                    <h3 class="text-sm font-bold text-white">How was your experience with CipherVault?</h3>
+                    <p class="text-xs text-slate-400" id="feedbackPromptText">Rate your experience using our 7-star elite scale</p>
+                </div>
+                
+                <div class="flex flex-col items-center space-y-3">
+                    <!-- Expression Emoji Indicator -->
+                    <div id="expressionEmoji" class="text-3xl animate-bounce">😐</div>
+                    
+                    <!-- 7 Stars -->
+                    <div id="starContainer" class="flex items-center space-x-1.5 sm:space-x-2">
+                        <!-- Generated via JS -->
+                    </div>
+
+                    <div class="w-full max-w-md mt-3 flex gap-2">
+                        <input type="text" id="feedbackComment" placeholder="Leave an expressive note or comment..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500">
+                        <button onclick="submitFeedback()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl text-xs font-semibold transition shrink-0">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW 2: PRO LOUNGE / READER VIEW -->
-        <div id="proView" class="hidden space-y-8">
-            <div class="flex items-center justify-between mb-2">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-purple-700 flex items-center justify-center shadow-lg shadow-amber-500/20">
-                        <i class="fa-solid fa-crown text-white text-lg"></i>
+        <!-- Receiver Vault View (Hidden by default until hash link is opened) -->
+        <div id="receiverView" class="hidden space-y-6">
+            <div class="bg-slate-900/90 border border-purple-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-6">
+                <div class="text-center space-y-2">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 mx-auto flex items-center justify-center text-xl shadow-inner">
+                        <i class="fa-solid fa-lock-open"></i>
                     </div>
-                    <div>
-                        <h2 class="text-2xl font-black text-white">VIP Pro Lounge & Secure Reader</h2>
-                        <p class="text-xs text-gray-400">Zero-knowledge local decryption active.</p>
-                    </div>
-                </div>
-                <span class="text-xs px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold flex items-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-shield-cat"></i> VIP Badge Active
-                </span>
-            </div>
-
-            <!-- DECRYPTED MESSAGE & MEDIA BOX -->
-            <div class="p-8 rounded-3xl bg-cardbg border border-purple-500/40 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500"></div>
-                
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-lg font-black text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> Decrypted Secret Payload & Media
-                    </h3>
-                    <span id="statusBadge" class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono">Secure Decryption</span>
+                    <h2 class="text-lg font-bold text-white">Encrypted Vault Unlocked</h2>
+                    <p class="text-xs text-slate-400">Zero-Knowledge secure payload decrypted successfully in your browser.</p>
                 </div>
 
-                <!-- Anti-Screenshot Blur Wrapper -->
-                <div id="blurWrapper" class="relative transition-all duration-300 space-y-4">
-                    <div id="retrievedContent" class="bg-darkbg/95 border border-purple-950 rounded-2xl p-6 font-mono text-sm text-gray-200 select-all whitespace-pre-wrap shadow-inner">
-                        Decrypting payload locally...
-                    </div>
-                    
-                    <!-- Media Container (Images, Videos, Audio Player) -->
-                    <div id="mediaContainer" class="hidden bg-darkbg/95 border border-purple-950 rounded-2xl p-4 text-center">
-                        <!-- Rendered media goes here -->
+                <!-- Decrypted Message Box -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Secret Message</label>
+                    <div id="receivedMessageDisplay" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-slate-200 text-sm whitespace-pre-wrap font-mono"></div>
+                </div>
+
+                <!-- Decrypted File Box -->
+                <div id="receivedFileBox" class="hidden space-y-1.5">
+                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Attached File / Media</label>
+                    <div id="receivedFileContent" class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex items-center justify-between"></div>
+                </div>
+
+                <!-- Decrypted Voice Mail Box -->
+                <div id="receivedVoiceBox" class="hidden space-y-1.5">
+                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Voice Mail Note</label>
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex items-center">
+                        <audio id="receivedAudioPlayer" controls class="w-full h-9"></audio>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between flex-wrap gap-4 pt-6 mt-6 border-t border-purple-900/40">
-                    <p class="text-xs text-gray-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-fire text-red-400"></i> Burning this note destroys it permanently for everyone.
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <button type="button" onclick="switchView('main')" class="bg-purple-900/30 hover:bg-purple-900/50 text-purple-300 border border-purple-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-xs flex items-center gap-2 cursor-pointer">
-                            <i class="fa-solid fa-plus"></i> Create New
-                        </button>
-                        <button type="button" id="burnBtn" onclick="burnNote()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-5 rounded-xl transition-all text-xs flex items-center gap-2 shadow-lg shadow-red-600/20 cursor-pointer">
-                            <i class="fa-solid fa-fire"></i> Burn Note Permanently
-                        </button>
-                    </div>
+                <div class="pt-2">
+                    <button onclick="window.location.hash = ''; window.location.reload();" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition">
+                        <i class="fa-solid fa-arrow-left mr-1.5"></i> Create Your Own Secure Vault
+                    </button>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-purple-950 bg-cardbg/80 py-6 text-center text-xs text-gray-500">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>© 2026 Rummaina CipherVault. All rights reserved.</p>
-            <a href="https://www.buymeacoffee.com" target="_blank" class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold hover:bg-amber-500/30 transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/10">
-                <i class="fa-solid fa-mug-hot text-amber-400"></i> Support Creator (Buy Me a Coffee)
-            </a>
+    <!-- Rating Modal Popup -->
+    <div id="ratingModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-bold text-white">Rate Rummaina CipherVault</h3>
+                <button onclick="closeRatingModal()" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark text-base"></i></button>
+            </div>
+            <p class="text-xs text-slate-400">Tap stars to support our development team:</p>
+            <div class="flex justify-center space-x-2 py-2" id="modalStars">
+                <!-- 7 stars for modal -->
+            </div>
+            <button onclick="saveWebsiteRating()" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition">Submit Rating</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="support" class="border-t border-slate-800/60 bg-slate-900/30 py-6 text-center text-xs text-slate-500 space-y-2">
+        <p>© 2026 Rummaina CipherVault. All rights reserved.</p>
+        <div class="flex justify-center items-center space-x-4">
+            <a href="#" class="hover:text-purple-400 transition"><i class="fa-solid fa-mug-hot mr-1 text-amber-400"></i> Support Creator</a>
+            <span>•</span>
+            <a href="#" onclick="openRatingModal()" class="hover:text-purple-400 transition"><i class="fa-solid fa-star mr-1 text-amber-400"></i> Rate Website</a>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- Script Application Logic -->
     <script>
         let attachedFileData = null;
-        let attachedFileType = null;
+        let recordedAudioBlob = null;
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
 
-        function switchView(viewName) {
-            const mainView = document.getElementById('mainView');
-            const proView = document.getElementById('proView');
-            if (!mainView || !proView) return;
+        // 7-Star Ratings State & Expressions
+        const expressions = [
+            { star: 1, emoji: "😡", text: "Extremely Unsatisfied" },
+            { star: 2, emoji: "😞", text: "Needs Major Improvement" },
+            { star: 3, emoji: "😕", text: "Below Expectations" },
+            { star: 4, emoji: "😐", text: "Neutral / Okay Experience" },
+            { star: 5, emoji: "😊", text: "Good & Functional" },
+            { star: 6, emoji: "😍", text: "Amazing Elite Experience!" },
+            { star: 7, emoji: "🔥", text: "Absolute Masterpiece!" }
+        ];
 
-            if (viewName === 'pro') {
-                mainView.classList.add('hidden');
-                proView.classList.remove('hidden');
-                history.pushState(null, '', '#pro-lounge');
-            } else {
-                proView.classList.add('hidden');
-                mainView.classList.remove('hidden');
-                history.pushState(null, '', window.location.pathname);
+        let currentSelectedStars = 5;
+        let modalSelectedStars = 5;
+
+        // Initialize Star UI
+        function renderStars() {
+            const container = document.getElementById('starContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            
+            expressions.forEach((item) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `text-xl sm:text-2xl transition transform hover:scale-110 ${item.star <= currentSelectedStars ? 'text-amber-400 filter drop-shadow(0 0 6px rgba(251,191,36,0.5))' : 'text-slate-700'}`;
+                btn.innerHTML = '<i class="fa-solid fa-star"></i>';
+                btn.onclick = () => setStarRating(item.star);
+                container.appendChild(btn);
+            });
+
+            // Update Emoji & Text
+            const exp = expressions[currentSelectedStars - 1];
+            document.getElementById('expressionEmoji').innerText = exp.emoji;
+            document.getElementById('feedbackPromptText').innerText = `${exp.star}/7 Stars: ${exp.text}`;
+        }
+
+        function setStarRating(rating) {
+            currentSelectedStars = rating;
+            renderStars();
+        }
+
+        function submitFeedback() {
+            const comment = document.getElementById('feedbackComment').value;
+            alert(`Thank you! Your ${currentSelectedStars}-star feedback has been recorded successfully.`);
+            document.getElementById('feedbackComment').value = '';
+        }
+
+        // Rating Modal Logic
+        function renderModalStars() {
+            const container = document.getElementById('modalStars');
+            if(!container) return;
+            container.innerHTML = '';
+            
+            for(let i=1; i<=7; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `text-2xl transition ${i <= modalSelectedStars ? 'text-amber-400' : 'text-slate-700'}`;
+                btn.innerHTML = '<i class="fa-solid fa-star"></i>';
+                btn.onclick = () => { modalSelectedStars = i; renderModalStars(); };
+                container.appendChild(btn);
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function triggerFileInput() {
-            const fileInput = document.getElementById('realFileInput');
-            if (fileInput) fileInput.click();
+        function openRatingModal() {
+            modalSelectedStars = 5;
+            renderModalStars();
+            document.getElementById('ratingModal').classList.remove('hidden');
         }
 
-        function handleFileSelected(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            attachedFileType = file.type;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                attachedFileData = e.target.result; // Base64 Data URL
-                const uploadText = document.getElementById('fileUploadText');
-                if (uploadText) {
-                    uploadText.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-file-circle-check"></i> Attached: ${file.name}</span>`;
-                }
-            };
-            reader.readAsDataURL(file);
+        function closeRatingModal() {
+            document.getElementById('ratingModal').classList.add('hidden');
         }
 
-        function initTrialTimer() {
-            let trialEnd = localStorage.getItem('rummaina_trial_end');
-            if (!trialEnd) {
-                trialEnd = new Date().getTime() + (14 * 24 * 60 * 60 * 1000);
-                localStorage.setItem('rummaina_trial_end', trialEnd);
-            }
-
-            setInterval(() => {
-                const now = new Date().getTime();
-                const distance = trialEnd - now;
-                const timerText = document.getElementById('timerText');
-                if (!timerText) return;
-                if (distance < 0) {
-                    timerText.textContent = "Trial Expired - Pro Locked";
-                    return;
-                }
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                timerText.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }, 1000);
+        function saveWebsiteRating() {
+            document.getElementById('navRatingDisplay').innerText = ((modalSelectedStars + 38) / 9).toFixed(1);
+            let countSpan = document.getElementById('navRatingCount');
+            let currentCount = parseInt(countSpan.innerText.replace('(', '').replace(')', '')) + 1;
+            countSpan.innerText = `(${currentCount})`;
+            closeRatingModal();
+            alert('Thank you for rating our website!');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initTrialTimer();
-            let vaultCount = parseInt(localStorage.getItem('rummaina_vault_count') || '0');
-            const projectCountBadge = document.getElementById('projectCountBadge');
-            if (projectCountBadge) projectCountBadge.textContent = `Vaults Created: ${vaultCount}`;
+        // Voice Mail Recorder Logic
+        async function toggleRecording() {
+            const btnText = document.getElementById('recBtnText');
+            const recIcon = document.getElementById('recIcon');
+            const recStatus = document.getElementById('recStatus');
+            const audioPreview = document.getElementById('audioPreview');
 
-            const hash = window.location.hash;
-            if (hash.includes('vault=')) {
-                switchView('pro');
+            if (!isRecording) {
                 try {
-                    const encodedData = hash.split('vault=')[1].split('&')[0];
-                    const jsonString = decodeURIComponent(atob(encodedData));
-                    const payloadObj = JSON.parse(jsonString);
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
 
-                    // Check if burned
-                    if (payloadObj.burned) {
-                        showBurnedState();
-                        return;
-                    }
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
 
-                    const retrievedContent = document.getElementById('retrievedContent');
-                    if (retrievedContent) retrievedContent.textContent = payloadObj.message || "No text provided.";
+                    mediaRecorder.onstop = () => {
+                        recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const audioUrl = URL.createObjectURL(recordedAudioBlob);
+                        audioPreview.src = audioUrl;
+                        audioPreview.classList.remove('hidden');
+                        recStatus.innerText = "Recorded Voice Ready";
+                    };
 
-                    // Handle Media / Files
-                    if (payloadObj.fileData) {
-                        const mediaContainer = document.getElementById('mediaContainer');
-                        mediaContainer.classList.remove('hidden');
-                        
-                        if (payloadObj.fileType.startsWith('image/')) {
-                            mediaContainer.innerHTML = `<img src="${payloadObj.fileData}" class="max-h-96 mx-auto rounded-xl shadow-lg border border-purple-900">`;
-                        } else if (payloadObj.fileType.startsWith('video/')) {
-                            mediaContainer.innerHTML = `<video controls class="max-h-96 w-full rounded-xl shadow-lg border border-purple-900"><source src="${payloadObj.fileData}" type="${payloadObj.fileType}">Your browser does not support video.</video>`;
-                        } else if (payloadObj.fileType.startsWith('audio/')) {
-                            mediaContainer.innerHTML = `<div class="p-4"><p class="text-xs text-pink-300 mb-2 font-bold"><i class="fa-solid fa-microphone-lines"></i> Voice Note / Audio Attached</p><audio controls class="w-full"><source src="${payloadObj.fileData}" type="${payloadObj.fileType}">Your browser does not support audio.</audio></div>`;
-                        }
-                    }
-
-                } catch (e) {
-                    const retrievedContent = document.getElementById('retrievedContent');
-                    if (retrievedContent) retrievedContent.textContent = "⚠️ Error: Invalid vault link or expired data.";
+                    mediaRecorder.start();
+                    isRecording = true;
+                    btnText.innerText = "Stop Recording";
+                    recIcon.className = "fa-solid fa-stop text-white text-[10px]";
+                    recStatus.innerText = "Recording...";
+                } catch (err) {
+                    alert('Microphone access denied or not supported on this browser.');
                 }
-            } else if (hash.includes('pro-lounge')) {
-                switchView('pro');
-                const retrievedContent = document.getElementById('retrievedContent');
-                if (retrievedContent) retrievedContent.textContent = "No active secret found in URL.";
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                btnText.innerText = "Record Again";
+                recIcon.className = "fa-solid fa-circle text-red-500 text-[10px]";
             }
+        }
 
-            const blurWrapper = document.getElementById('blurWrapper');
-            if (blurWrapper) {
-                window.addEventListener('blur', () => {
-                    blurWrapper.classList.add('blur-md', 'select-none');
-                });
-                window.addEventListener('focus', () => {
-                    blurWrapper.classList.remove('blur-md', 'select-none');
-                });
-            }
-
-            const secretInput = document.getElementById('secretInput');
-            if (secretInput) {
-                secretInput.addEventListener('input', () => {
-                    const charCount = document.getElementById('charCount');
-                    if (charCount) charCount.textContent = `${secretInput.value.length} characters`;
-                });
-            }
+        // Character counter
+        document.getElementById('secretMessage').addEventListener('input', function(e) {
+            const len = e.target.value.length;
+            document.getElementById('charCounter').innerText = `${len} characters`;
         });
 
-        function createSecureLink() {
-            const secretInput = document.getElementById('secretInput');
-            const textValue = secretInput ? secretInput.value.trim() : '';
-            
-            if(!textValue && !attachedFileData) {
-                alert("Please type a message or attach a file before generating a secure link!");
-                if (secretInput) secretInput.focus();
+        // File Handler
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if(file) {
+                document.getElementById('fileLabelText').innerText = `Attached: ${file.name}`;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    attachedFileData = { name: file.name, type: file.type, data: e.target.result };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Vault Generation & Parsing
+        function generateVaultLink() {
+            const message = document.getElementById('secretMessage').value;
+            if(!message.trim() && !attachedFileData && !recordedAudioBlob) {
+                alert('Please enter a message, attach a file, or record a voice note first.');
                 return;
             }
 
-            const createBtn = document.getElementById('createBtn');
-            if (createBtn) {
-                createBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting Vault & Media...';
-            }
-
-            setTimeout(() => {
-                const payloadObj = {
-                    message: textValue,
-                    fileData: attachedFileData,
-                    fileType: attachedFileType,
-                    burned: false
+            // Convert voice blob to base64 if recorded
+            if(recordedAudioBlob) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const payload = {
+                        msg: message,
+                        file: attachedFileData,
+                        voice: reader.result
+                    };
+                    finalizeVaultLink(payload);
                 };
+                reader.readAsDataURL(recordedAudioBlob);
+            } else {
+                const payload = {
+                    msg: message,
+                    file: attachedFileData,
+                    voice: null
+                };
+                finalizeVaultLink(payload);
+            }
+        }
 
-                const jsonString = JSON.stringify(payloadObj);
-                const encodedData = btoa(encodeURIComponent(jsonString));
-                const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                const finalLink = `${baseUrl}#vault=${encodedData}`;
+        function finalizeVaultLink(payload) {
+            const jsonString = JSON.stringify(payload);
+            const encoded = btoa(unescape(encodeURIComponent(jsonString)));
+            const fullLink = window.location.origin + window.location.pathname + '#vault=' + encoded;
 
-                let vaultCount = parseInt(localStorage.getItem('rummaina_vault_count') || '0');
-                vaultCount += 1;
-                localStorage.setItem('rummaina_vault_count', vaultCount);
-                
-                const projectCountBadge = document.getElementById('projectCountBadge');
-                if (projectCountBadge) projectCountBadge.textContent = `Vaults Created: ${vaultCount}`;
+            document.getElementById('generatedLinkInput').value = fullLink;
+            document.getElementById('resultBox').classList.remove('hidden');
+        }
 
-                const shareableLink = document.getElementById('shareableLink');
-                const resultBox = document.getElementById('resultBox');
-                
-                if (shareableLink) shareableLink.value = finalLink;
-                if (resultBox) {
-                    resultBox.classList.remove('hidden');
-                    resultBox.scrollIntoView({ behavior: 'smooth' });
+        function copyGeneratedLink() {
+            const input = document.getElementById('generatedLinkInput');
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            alert('Secure vault link copied to clipboard!');
+        }
+
+        // Check if URL has Hash on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderStars();
+            const hash = window.location.hash;
+            if(hash.includes('#vault=')) {
+                try {
+                    const encodedData = hash.split('#vault=')[1];
+                    const jsonString = decodeURIComponent(escape(atob(encodedData)));
+                    const payload = JSON.parse(jsonString);
+
+                    // Switch views
+                    document.getElementById('creatorView').classList.add('hidden');
+                    document.getElementById('receiverView').classList.remove('hidden');
+
+                    // Populate Message
+                    document.getElementById('receivedMessageDisplay').innerText = payload.msg || "No text message attached.";
+
+                    // Populate File
+                    if(payload.file) {
+                        document.getElementById('receivedFileBox').classList.remove('hidden');
+                        document.getElementById('receivedFileContent').innerHTML = `
+                            <span class="text-xs text-purple-300 font-mono truncate max-w-[200px]">${payload.file.name}</span>
+                            <a href="${payload.file.data}" download="${payload.file.name}" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition">Download</a>
+                        `;
+                    }
+
+                    // Populate Voice Mail
+                    if(payload.voice) {
+                        document.getElementById('receivedVoiceBox').classList.remove('hidden');
+                        document.getElementById('receivedAudioPlayer').src = payload.voice;
+                    }
+
+                } catch(e) {
+                    // Fallback error container handling cleanly
+                    document.getElementById('creatorView').innerHTML = `
+                        <div class="bg-red-950/40 border border-red-500/40 rounded-2xl p-6 text-center space-y-3">
+                            <i class="fa-solid fa-triangle-exclamation text-red-400 text-2xl"></i>
+                            <h3 class="text-sm font-bold text-white">⚠️ Error: Invalid vault link or expired data.</h3>
+                            <p class="text-xs text-slate-400">The secret payload link is malformed or corrupted. Please generate a fresh secure vault link.</p>
+                            <a href="?" class="inline-block mt-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition">Create New Vault</a>
+                        </div>
+                    `;
                 }
-
-                if (createBtn) {
-                    createBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Generate Secure Encrypted Link';
-                }
-            }, 600);
-        }
-
-        // BURN NOTE PERMANENTLY
-        function burnNote() {
-            try {
-                const hash = window.location.hash;
-                if (!hash.includes('vault=')) return;
-
-                const encodedData = hash.split('vault=')[1].split('&')[0];
-                const jsonString = decodeURIComponent(atob(encodedData));
-                const payloadObj = JSON.parse(jsonString);
-
-                // Mark as burned
-                payloadObj.burned = true;
-                payloadObj.message = "🔥 This secret note and media has been permanently burned and destroyed.";
-                payloadObj.fileData = null;
-
-                const newEncoded = btoa(encodeURIComponent(JSON.stringify(payloadObj)));
-                const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                const burnedLink = `${baseUrl}#vault=${newEncoded}`;
-
-                // Update URL hash directly without reload
-                history.replaceState(null, '', burnedLink);
-                showBurnedState();
-
-            } catch (e) {
-                alert("Failed to burn note.");
             }
-        }
-
-        function showBurnedState() {
-            const retrievedContent = document.getElementById('retrievedContent');
-            const mediaContainer = document.getElementById('mediaContainer');
-            const statusBadge = document.getElementById('statusBadge');
-            const burnBtn = document.getElementById('burnBtn');
-
-            if (retrievedContent) {
-                retrievedContent.textContent = "🔥 This secret note has been permanently burned and destroyed globally.";
-                retrievedContent.className = "bg-darkbg/95 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 select-all shadow-inner";
-            }
-            if (mediaContainer) mediaContainer.classList.add('hidden');
-            if (statusBadge) {
-                statusBadge.textContent = "Destroyed / Burned";
-                statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
-            }
-            if (burnBtn) burnBtn.style.display = 'none';
-        }
-
-        function copyLink() {
-            const shareableLink = document.getElementById('shareableLink');
-            const copyBtn = document.getElementById('copyBtn');
-            if (!shareableLink) return;
-            
-            shareableLink.select();
-            navigator.clipboard.writeText(shareableLink.value);
-            if (copyBtn) {
-                copyBtn.innerHTML = '<i class="fa-solid fa-check text-white"></i> Copied!';
-                setTimeout(() => { copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link'; }, 2000);
-            }
-        }
+        });
     </script>
 </body>
 </html>
