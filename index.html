@@ -157,7 +157,7 @@
                 <!-- Anti-Screenshot Blur Wrapper -->
                 <div id="blurWrapper" class="relative transition-all duration-300">
                     <div id="retrievedContent" class="bg-darkbg/90 border border-gray-900 rounded-2xl p-6 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap shadow-inner">
-                        Loading encrypted payload from server...
+                        Loading encrypted payload...
                     </div>
                 </div>
 
@@ -208,7 +208,7 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC + BACKEND INTEGRATION -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
         const secretInput = document.getElementById('secretInput');
         const charCount = document.getElementById('charCount');
@@ -224,7 +224,6 @@
 
         let currentMessageId = null;
 
-        // View Switcher
         function switchView(viewName) {
             if (viewName === 'pro') {
                 mainView.classList.add('hidden');
@@ -238,7 +237,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2 Weeks Trial Timer
         function initTrialTimer() {
             let trialEnd = localStorage.getItem('rummaina_trial_end');
             if (!trialEnd) {
@@ -261,23 +259,33 @@
             }, 1000);
         }
 
-        window.addEventListener('DOMContentLoaded', async () => {
+        window.addEventListener('DOMContentLoaded', () => {
             initTrialTimer();
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
-            // Check URL hash for backend message ID (e.g., #id=xyz123)
             const hash = window.location.hash;
-            if (hash.includes('id=')) {
+            if (hash.includes('secret=')) {
                 switchView('pro');
-                currentMessageId = hash.split('id=')[1];
-                await fetchMessageFromServer(currentMessageId);
+                try {
+                    const encodedData = hash.split('secret=')[1];
+                    const decodedMessage = decodeURIComponent(escape(atob(encodedData)));
+                    retrievedContent.textContent = decodedMessage;
+                    currentMessageId = encodedData;
+
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance("Warning. Secure message loaded successfully.");
+                        utterance.rate = 1.0;
+                        window.speechSynthesis.speak(utterance);
+                    }
+                } catch (e) {
+                    retrievedContent.textContent = "🔥 Invalid or corrupted secure payload!";
+                }
             } else if (hash.includes('pro-lounge')) {
                 switchView('pro');
                 retrievedContent.textContent = "No active payload found in URL hash. Generate a link from the main vault.";
             }
 
-            // Anti-Screenshot / Blur on Window Blur
             window.addEventListener('blur', () => {
                 blurWrapper.classList.add('blur-md', 'select-none');
             });
@@ -290,33 +298,7 @@
             charCount.textContent = `${secretInput.value.length} characters`;
         });
 
-        // 1. Fetch Message from Backend (True Burn-on-Read: Fetches and deletes instantly on server)
-        async function fetchMessageFromServer(messageId) {
-            try {
-                const response = await fetch(`/api/message/${messageId}`);
-                const data = await response.json();
-
-                if (!response.ok) {
-                    retrievedContent.textContent = data.error || "🔥 Yeh message pehle hi burn ho chuka hai ya exist nahi karta!";
-                    retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-                    return;
-                }
-
-                retrievedContent.textContent = data.secret;
-
-                // Trigger AI Voice Warning
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance("Warning. Secure message loaded and burned from server.");
-                    utterance.rate = 1.0;
-                    window.speechSynthesis.speak(utterance);
-                }
-            } catch (err) {
-                retrievedContent.textContent = "Failed to connect to the backend server.";
-            }
-        }
-
-        // 2. Create Secure Link
-        async function createSecureLink() {
+        function createSecureLink() {
             const textValue = secretInput.value.trim();
             if(!textValue) {
                 alert("Please type a message before generating a secure link!");
@@ -325,16 +307,8 @@
             }
 
             try {
-                // Backend API call to save message and get generated ID
-                // const res = await fetch('/api/create-message', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify({ secretPayload: textValue })
-                // });
-                // const data = await res.json();
-                
-                // Fallback simulation ID for previewing:
-                const fakeId = Math.random().toString(36).substring(2, 9); 
+                // Fully client-side base64 encoding compatible with static hosting like GitHub Pages
+                const encodedData = btoa(unescape(encodeURIComponent(textValue)));
 
                 let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
                 projects += 1;
@@ -342,12 +316,12 @@
                 projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
                 const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                const finalLink = `${baseUrl}#id=${fakeId}`;
+                const finalLink = `${baseUrl}#secret=${encodedData}`;
                 shareableLink.value = finalLink;
                 resultBox.classList.remove('hidden');
                 resultBox.scrollIntoView({ behavior: 'smooth' });
             } catch(e) {
-                alert("Error creating link on server.");
+                alert("Error creating link.");
             }
         }
 
@@ -358,24 +332,11 @@
             setTimeout(() => { copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link'; }, 2000);
         }
 
-        // 3. Manual Burn Note Triggered by User
-        async function burnNote() {
-            if (!currentMessageId) {
-                retrievedContent.textContent = "🔥 Message already cleared.";
-                return;
-            }
-
-            try {
-                // Backend API call to permanently delete
-                // await fetch(`/api/burn-message/${currentMessageId}`, { method: 'POST' });
-
-                retrievedContent.textContent = "🔥 Message permanently burned and destroyed for everyone.";
-                retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-                history.replaceState(null, "", window.location.pathname);
-                currentMessageId = null;
-            } catch(e) {
-                alert("Failed to burn note on server.");
-            }
+        function burnNote() {
+            retrievedContent.textContent = "🔥 Message permanently burned and destroyed.";
+            retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+            history.replaceState(null, "", window.location.pathname);
+            currentMessageId = null;
         }
     </script>
 </body>
