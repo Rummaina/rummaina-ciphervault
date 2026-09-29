@@ -96,7 +96,7 @@
                             <span>Attach Files, Images & Videos</span>
                             <span class="text-xs text-amber-400 font-medium">Trial Pro: 1 TB Limit Active</span>
                         </label>
-                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="handleFileAreaClick()">
+                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="triggerFileInput()">
                             <!-- Hidden actual file input -->
                             <input type="file" id="realFileInput" class="hidden" multiple onchange="handleFileSelected(event)">
                             
@@ -213,22 +213,9 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        const secretInput = document.getElementById('secretInput');
-        const charCount = document.getElementById('charCount');
-        const resultBox = document.getElementById('resultBox');
-        const shareableLink = document.getElementById('shareableLink');
-        const copyBtn = document.getElementById('copyBtn');
-        const projectCountBadge = document.getElementById('projectCountBadge');
-        const timerText = document.getElementById('timerText');
-        const mainView = document.getElementById('mainView');
-        const proView = document.getElementById('proView');
-        const retrievedContent = document.getElementById('retrievedContent');
-        const blurWrapper = document.getElementById('blurWrapper');
-        const realFileInput = document.getElementById('realFileInput');
-        const fileUploadText = document.getElementById('fileUploadText');
-        const statusBadge = document.getElementById('statusBadge');
-
         function switchView(viewName) {
+            const mainView = document.getElementById('mainView');
+            const proView = document.getElementById('proView');
             if (viewName === 'pro') {
                 mainView.classList.add('hidden');
                 proView.classList.remove('hidden');
@@ -241,21 +228,21 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Zindagi mein sirf aik baar trial message dikhane ka logic
-        function handleFileAreaClick() {
+        // File area click handling with 1-time alert
+        function triggerFileInput() {
             const hasSeenTrialMsg = localStorage.getItem('rummaina_seen_trial_msg');
             if (!hasSeenTrialMsg) {
                 alert("🔥 Trial Pro File Slot Active! You can attach files up to 1 TB during your free trial window.");
                 localStorage.setItem('rummaina_seen_trial_msg', 'true');
             }
-            realFileInput.click();
+            document.getElementById('realFileInput').click();
         }
 
         function handleFileSelected(event) {
             const files = event.target.files;
             if (files && files.length > 0) {
                 const fileNames = Array.from(files).map(f => f.name).join(', ');
-                fileUploadText.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-file-circle-check"></i> Attached: ${fileNames}</span>`;
+                document.getElementById('fileUploadText').innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-file-circle-check"></i> Attached: ${fileNames}</span>`;
             }
         }
 
@@ -269,6 +256,8 @@
             setInterval(() => {
                 const now = new Date().getTime();
                 const distance = trialEnd - now;
+                const timerText = document.getElementById('timerText');
+                if (!timerText) return;
                 if (distance < 0) {
                     timerText.textContent = "Trial Expired - Pro Locked";
                     return;
@@ -284,26 +273,30 @@
         window.addEventListener('DOMContentLoaded', () => {
             initTrialTimer();
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
-            projectCountBadge.textContent = `Projects: ${projects} / 3`;
+            const projectCountBadge = document.getElementById('projectCountBadge');
+            if (projectCountBadge) projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
             const hash = window.location.hash;
+            const retrievedContent = document.getElementById('retrievedContent');
+            const statusBadge = document.getElementById('statusBadge');
+
             if (hash.includes('token=')) {
                 switchView('pro');
                 const token = hash.split('token=')[1];
-                
-                // Check localStorage for the stored secret message payload
                 const encryptedData = localStorage.getItem('rummaina_secret_' + token);
 
                 if (encryptedData) {
                     try {
                         const decodedMessage = decodeURIComponent(escape(atob(encryptedData)));
-                        retrievedContent.textContent = decodedMessage;
+                        if (retrievedContent) retrievedContent.textContent = decodedMessage;
                         
-                        // ONE-TIME BURN: Message read hote hi localStorage se permanently delete kar do
+                        // ONE-TIME BURN: Message read hote hi delete ho jaye
                         localStorage.removeItem('rummaina_secret_' + token);
                         
-                        statusBadge.textContent = "Burned After Read";
-                        statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+                        if (statusBadge) {
+                            statusBadge.textContent = "Burned After Read";
+                            statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+                        }
 
                         if ('speechSynthesis' in window) {
                             const utterance = new SpeechSynthesisUtterance("Warning. One-time secure message loaded and permanently destroyed.");
@@ -311,75 +304,105 @@
                             window.speechSynthesis.speak(utterance);
                         }
                     } catch (e) {
-                        retrievedContent.textContent = "🔥 Error decoding secure payload!";
+                        if (retrievedContent) retrievedContent.textContent = "🔥 Error decoding secure payload!";
                     }
                 } else {
-                    // Agar message pehle hi read ho chuka hai ya gayab ho gaya hai
-                    retrievedContent.textContent = "⚠️ This message has already been read and permanently burned / destroyed, or the link is invalid!";
-                    retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-                    statusBadge.textContent = "Already Burned";
-                    statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+                    if (retrievedContent) {
+                        retrievedContent.textContent = "⚠️ This message has already been read and permanently burned / destroyed, or the link is invalid!";
+                        retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+                    }
+                    if (statusBadge) {
+                        statusBadge.textContent = "Already Burned";
+                        statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+                    }
                 }
             } else if (hash.includes('pro-lounge')) {
                 switchView('pro');
-                retrievedContent.textContent = "No active payload found in URL hash. Generate a link from the main vault.";
+                if (retrievedContent) retrievedContent.textContent = "No active payload found in URL hash. Generate a link from the main vault.";
             }
 
-            window.addEventListener('blur', () => {
-                blurWrapper.classList.add('blur-md', 'select-none');
-            });
-            window.addEventListener('focus', () => {
-                blurWrapper.classList.remove('blur-md', 'select-none');
-            });
+            const blurWrapper = document.getElementById('blurWrapper');
+            if (blurWrapper) {
+                window.addEventListener('blur', () => {
+                    blurWrapper.classList.add('blur-md', 'select-none');
+                });
+                window.addEventListener('focus', () => {
+                    blurWrapper.classList.remove('blur-md', 'select-none');
+                });
+            }
         });
 
-        secretInput.addEventListener('input', () => {
-            charCount.textContent = `${secretInput.value.length} characters`;
-        });
+        const secretInput = document.getElementById('secretInput');
+        if (secretInput) {
+            secretInput.addEventListener('input', () => {
+                const charCount = document.getElementById('charCount');
+                if (charCount) charCount.textContent = `${secretInput.value.length} characters`;
+            });
+        }
 
         function createSecureLink() {
-            const textValue = secretInput.value.trim();
+            const secretInput = document.getElementById('secretInput');
+            const textValue = secretInput ? secretInput.value.trim() : '';
             if(!textValue) {
                 alert("Please type a message before generating a secure link!");
-                secretInput.focus();
+                if (secretInput) secretInput.focus();
                 return;
             }
 
             try {
-                // Unique random token generate karein
-                const token = Math.random().toString(36.substring(2)) + Date.now().toString(36);
+                const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
                 const encodedData = btoa(unescape(encodeURIComponent(textValue)));
 
-                // LocalStorage mein token ke against message save karein
                 localStorage.setItem('rummaina_secret_' + token, encodedData);
 
                 let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
                 projects += 1;
                 localStorage.setItem('rummaina_project_count', projects);
-                projectCountBadge.textContent = `Projects: ${projects} / 3`;
+                
+                const projectCountBadge = document.getElementById('projectCountBadge');
+                if (projectCountBadge) projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
                 const baseUrl = window.location.href.split('#')[0].split('?')[0];
                 const finalLink = `${baseUrl}#token=${token}`;
-                shareableLink.value = finalLink;
-                resultBox.classList.remove('hidden');
-                resultBox.scrollIntoView({ behavior: 'smooth' });
+                
+                const shareableLink = document.getElementById('shareableLink');
+                const resultBox = document.getElementById('resultBox');
+                
+                if (shareableLink) shareableLink.value = finalLink;
+                if (resultBox) {
+                    resultBox.classList.remove('hidden');
+                    resultBox.scrollIntoView({ behavior: 'smooth' });
+                }
             } catch(e) {
                 alert("Error creating link.");
             }
         }
 
         function copyLink() {
+            const shareableLink = document.getElementById('shareableLink');
+            const copyBtn = document.getElementById('copyBtn');
+            if (!shareableLink) return;
+            
             shareableLink.select();
             navigator.clipboard.writeText(shareableLink.value);
-            copyBtn.innerHTML = '<i class="fa-solid fa-check text-black"></i> Copied!';
-            setTimeout(() => { copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link'; }, 2000);
+            if (copyBtn) {
+                copyBtn.innerHTML = '<i class="fa-solid fa-check text-black"></i> Copied!';
+                setTimeout(() => { copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Link'; }, 2000);
+            }
         }
 
         function burnNote() {
-            retrievedContent.textContent = "🔥 Message permanently burned and destroyed.";
-            retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-            statusBadge.textContent = "Manually Burned";
-            statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+            const retrievedContent = document.getElementById('retrievedContent');
+            const statusBadge = document.getElementById('statusBadge');
+            
+            if (retrievedContent) {
+                retrievedContent.textContent = "🔥 Message permanently burned and destroyed.";
+                retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+            }
+            if (statusBadge) {
+                statusBadge.textContent = "Manually Burned";
+                statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+            }
             history.replaceState(null, "", window.location.pathname);
         }
     </script>
