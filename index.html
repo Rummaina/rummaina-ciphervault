@@ -162,7 +162,7 @@
             </div>
         </div>
 
-        <!-- Receiver Vault View (Hidden by default until hash link is opened) -->
+        <!-- Receiver Vault View (Hidden by default unless secret vault hash link is opened) -->
         <div id="receiverView" class="hidden space-y-6">
             <div class="bg-slate-900/90 border border-purple-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-6">
                 <div class="text-center space-y-2">
@@ -198,6 +198,16 @@
                         <i class="fa-solid fa-arrow-left mr-1.5"></i> Create Your Own Secure Vault
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Fallback View if Link is Broken -->
+        <div id="errorView" class="hidden space-y-6">
+            <div class="bg-red-950/40 border border-red-500/40 rounded-2xl p-6 text-center space-y-3">
+                <i class="fa-solid fa-triangle-exclamation text-red-400 text-2xl"></i>
+                <h3 class="text-sm font-bold text-white">⚠️ No active secret found in URL</h3>
+                <p class="text-xs text-slate-400">The link you opened doesn't contain a valid secret vault payload. To send a secret, create a new vault below.</p>
+                <a href="?" class="inline-block mt-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition">Create New Vault</a>
             </div>
         </div>
 
@@ -385,7 +395,6 @@
                 return;
             }
 
-            // Convert voice blob to base64 if recorded
             if(recordedAudioBlob) {
                 const reader = new FileReader();
                 reader.onloadend = function() {
@@ -427,7 +436,8 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderStars();
             const hash = window.location.hash;
-            if(hash.includes('#vault=')) {
+            
+            if(hash && hash.includes('#vault=')) {
                 try {
                     const encodedData = hash.split('#vault=')[1];
                     const jsonString = decodeURIComponent(escape(atob(encodedData)));
@@ -456,16 +466,12 @@
                     }
 
                 } catch(e) {
-                    // Fallback error container handling cleanly
-                    document.getElementById('creatorView').innerHTML = `
-                        <div class="bg-red-950/40 border border-red-500/40 rounded-2xl p-6 text-center space-y-3">
-                            <i class="fa-solid fa-triangle-exclamation text-red-400 text-2xl"></i>
-                            <h3 class="text-sm font-bold text-white">⚠️ Error: Invalid vault link or expired data.</h3>
-                            <p class="text-xs text-slate-400">The secret payload link is malformed or corrupted. Please generate a fresh secure vault link.</p>
-                            <a href="?" class="inline-block mt-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition">Create New Vault</a>
-                        </div>
-                    `;
+                    document.getElementById('creatorView').classList.add('hidden');
+                    document.getElementById('errorView').classList.remove('hidden');
                 }
+            } else if (hash && hash !== '' && !hash.includes('#vault=')) {
+                // If opening generic tabs like #pro-lounge, just let creator view stay active nicely
+                document.getElementById('creatorView').classList.remove('hidden');
             }
         });
     </script>
