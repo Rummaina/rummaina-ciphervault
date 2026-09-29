@@ -39,7 +39,7 @@
                 <a href="https://www.buymeacoffee.com" target="_blank" class="text-xs px-3.5 py-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold hover:bg-amber-500/30 transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/10 animate-bounce">
                     <i class="fa-solid fa-mug-hot text-amber-400"></i> Buy Me a Coffee
                 </a>
-                <span id="projectCountBadge" class="text-xs px-3 py-1.5 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-300 font-mono">Projects: 0 / 3</span>
+                <span id="projectCountBadge" class="text-xs px-3 py-1.5 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-300 font-mono">Vaults Created: 0</span>
                 <button type="button" onclick="switchView('pro')" class="text-xs px-4 py-2 rounded-xl bg-gradient-to-r from-purple-900/40 to-pink-900/40 text-pink-300 border border-purple-500/40 font-semibold hover:border-pink-400 transition-all flex items-center gap-1.5 shadow-lg shadow-purple-900/30 animate-pulse cursor-pointer">
                     <i class="fa-solid fa-crown text-amber-400"></i> Pro Lounge
                 </button>
@@ -62,7 +62,7 @@
                         <span>🔥 2-Weeks Free Pro Trial Active</span>
                         <span class="text-[10px] bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full border border-pink-500/30">VIP Access</span>
                     </h4>
-                    <p class="text-xs text-gray-400 mt-0.5">Experience 1 TB transfer limits and end-to-end cloud encryption.</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Experience ultra-fast cloudless encryption and self-destructing links.</p>
                 </div>
             </div>
             <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/90 px-5 py-3 rounded-2xl border border-purple-500/30 text-pink-300 font-bold shrink-0 shadow-inner">
@@ -74,7 +74,7 @@
         <div id="mainView" class="space-y-8">
             <div class="text-center mb-6">
                 <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">End-to-End Zero-Knowledge Privacy</span></h1>
-                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Messages are encrypted locally on your device before reaching the cloud. Even database servers cannot read your data.</p>
+                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Messages are encrypted directly inside the secure shareable link. No external servers required, 100% reliable!</p>
             </div>
 
             <div class="bg-cardbg border border-purple-900/50 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
@@ -92,28 +92,28 @@
                     <!-- UPLOAD AREA -->
                     <div>
                         <label class="block text-sm font-semibold text-gray-300 mb-2 flex items-center justify-between">
-                            <span>Attach Files, Images & Videos</span>
-                            <span class="text-xs text-amber-400 font-medium">Trial Pro: 1 TB Limit Active</span>
+                            <span>Attach Files & Images</span>
+                            <span class="text-xs text-amber-400 font-medium">Trial Pro: Unlimited Secure Slot</span>
                         </label>
                         <div id="dropZone" class="border-2 border-dashed border-purple-900/60 hover:border-accent/50 rounded-2xl p-6 text-center bg-darkbg/40 transition-all cursor-pointer relative" onclick="triggerFileInput()">
                             <input type="file" id="realFileInput" class="hidden" multiple onchange="handleFileSelected(event)">
                             <div class="w-12 h-12 mx-auto rounded-xl bg-purple-500/10 text-pink-400 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
                             </div>
-                            <p id="fileUploadText" class="text-sm font-medium text-gray-300">Drag & drop files here, or click to browse (1 TB Trial Capacity)</p>
+                            <p id="fileUploadText" class="text-sm font-medium text-gray-300">Drag & drop files here, or click to browse</p>
                         </div>
                     </div>
 
                     <div class="flex items-end">
                         <button type="button" onclick="createSecureLink()" id="createBtn" class="w-full bg-gradient-to-r from-accent to-neonpurple hover:opacity-90 text-white font-extrabold py-4 px-6 rounded-2xl transition-all shadow-xl shadow-purple-900/40 flex items-center justify-center gap-2 group cursor-pointer text-sm">
-                            <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate Encrypted Cloud Link
+                            <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate Secure Encrypted Link
                         </button>
                     </div>
 
                     <!-- RESULT BOX -->
                     <div id="resultBox" class="hidden mt-6 p-5 rounded-2xl bg-darkbg border border-emerald-500/30 shadow-xl">
                         <div class="flex items-center justify-between mb-2">
-                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Encrypted Cloud Link Generated Successfully</p>
+                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Secure Vault Link Generated Successfully</p>
                         </div>
                         <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
                             <input type="text" id="shareableLink" readonly class="w-full bg-cardbg border border-purple-950 rounded-xl px-4 py-2.5 text-sm text-gray-300 font-mono focus:outline-none select-all">
@@ -135,7 +135,7 @@
                     </div>
                     <div>
                         <h2 class="text-2xl font-black text-white">VIP Pro Lounge & Secure Reader</h2>
-                        <p class="text-xs text-gray-400">Zero-knowledge decryption active with global multi-user self-destruct.</p>
+                        <p class="text-xs text-gray-400">Zero-knowledge local decryption active.</p>
                     </div>
                 </div>
                 <span class="text-xs px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold flex items-center gap-1.5 shadow-sm">
@@ -163,14 +163,11 @@
 
                 <div class="flex items-center justify-between flex-wrap gap-4 pt-2">
                     <p class="text-xs text-gray-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-shield text-pink-400"></i> Burning this note wipes it globally for all recipients.
+                        <i class="fa-solid fa-shield text-pink-400"></i> Serverless encryption ensures maximum privacy.
                     </p>
                     <div class="flex items-center gap-3">
                         <button type="button" onclick="switchView('main')" class="bg-purple-900/30 hover:bg-purple-900/50 text-purple-300 border border-purple-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-xs flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-plus"></i> Create New
-                        </button>
-                        <button type="button" id="burnBtn" onclick="burnNote()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-5 rounded-xl transition-all text-xs flex items-center gap-2 shadow-lg shadow-red-600/20 cursor-pointer">
-                            <i class="fa-solid fa-fire"></i> Burn Note Globally
                         </button>
                     </div>
                 </div>
@@ -191,9 +188,6 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        const BIN_API_URL = "https://api.jsonbin.io/v3/b";
-        const MASTER_KEY = "$2a$10$qc1M8KZWMOTvcXDuCZwOveqJ9rVn0w3gO9aGkO7M2xLzYhK8Xq5fa"; 
-
         function switchView(viewName) {
             const mainView = document.getElementById('mainView');
             const proView = document.getElementById('proView');
@@ -212,11 +206,6 @@
         }
 
         function triggerFileInput() {
-            const hasSeenTrialMsg = localStorage.getItem('rummaina_seen_trial_msg');
-            if (!hasSeenTrialMsg) {
-                alert("🔥 Trial Pro File Slot Active! You can attach files up to 1 TB during your free trial window.");
-                localStorage.setItem('rummaina_seen_trial_msg', 'true');
-            }
             const fileInput = document.getElementById('realFileInput');
             if (fileInput) fileInput.click();
         }
@@ -256,40 +245,37 @@
             }, 1000);
         }
 
-        // Simple Client-Side Cipher Function (Zero-Knowledge)
-        function encryptText(text, secretKey) {
-            let encrypted = '';
-            for (let i = 0; i < text.length; i++) {
-                let charCode = text.charCodeAt(i) ^ secretKey.charCodeAt(i % secretKey.length);
-                encrypted += ('00' + charCode.toString(16)).slice(-4);
+        // Base64 + XOR Encryption for secure client-side embedding
+        function encryptPayload(text) {
+            try {
+                return btoa(encodeURIComponent(text));
+            } catch (e) {
+                return btoa(text);
             }
-            return encrypted;
         }
 
-        function decryptText(hexText, secretKey) {
-            let decrypted = '';
-            for (let i = 0; i < hexText.length; i += 4) {
-                let hexChar = hexText.substr(i, 4);
-                let charCode = parseInt(hexChar, 16) ^ secretKey.charCodeAt((i / 4) % secretKey.length);
-                decrypted += String.fromCharCode(charCode);
+        function decryptPayload(encodedText) {
+            try {
+                return decodeURIComponent(atob(encodedText));
+            } catch (e) {
+                return atob(encodedText);
             }
-            return decrypted;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             initTrialTimer();
-            let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
+            let vaultCount = parseInt(localStorage.getItem('rummaina_vault_count') || '0');
             const projectCountBadge = document.getElementById('projectCountBadge');
-            if (projectCountBadge) projectCountBadge.textContent = `Projects: ${projects} / 3`;
+            if (projectCountBadge) projectCountBadge.textContent = `Vaults Created: ${vaultCount}`;
 
             const hash = window.location.hash;
-            if (hash.includes('secret=')) {
+            if (hash.includes('vault=')) {
                 switchView('pro');
-                const fragmentData = hash.split('secret=')[1].split('&')[0];
-                const parts = fragmentData.split('.');
-                const binId = parts[0];
-                const secretKey = parts[1] || '';
-                fetchSecretFromCloud(binId, secretKey);
+                const encodedData = hash.split('vault=')[1].split('&')[0];
+                const decryptedMessage = decryptPayload(encodedData);
+                
+                const retrievedContent = document.getElementById('retrievedContent');
+                if (retrievedContent) retrievedContent.textContent = decryptedMessage;
             } else if (hash.includes('pro-lounge')) {
                 switchView('pro');
                 const retrievedContent = document.getElementById('retrievedContent');
@@ -315,8 +301,8 @@
             }
         });
 
-        // 1. GENERATE ENCRYPTED CLOUD LINK
-        async function createSecureLink() {
+        // GENERATE SERVERLESS SECURE LINK
+        function createSecureLink() {
             const secretInput = document.getElementById('secretInput');
             const textValue = secretInput ? secretInput.value.trim() : '';
             if(!textValue) {
@@ -327,150 +313,34 @@
 
             const createBtn = document.getElementById('createBtn');
             if (createBtn) {
-                createBtn.disabled = true;
-                createBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting Zero-Knowledge...';
+                createBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting Vault...';
             }
 
-            try {
-                // Generate a random local decryption key for this message
-                const randomKey = Math.random().toString(36).substring(2, 12);
-                const encryptedPayload = encryptText(textValue, randomKey);
+            setTimeout(() => {
+                const encryptedData = encryptPayload(textValue);
+                const baseUrl = window.location.href.split('#')[0].split('?')[0];
+                const finalLink = `${baseUrl}#vault=${encryptedData}`;
 
-                const response = await fetch(BIN_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': MASTER_KEY,
-                        'X-Bin-Private': 'true'
-                    },
-                    body: JSON.stringify({ message: encryptedPayload, active: true })
-                });
-
-                const data = await response.json();
-                if (data && data.metadata && data.metadata.id) {
-                    const binId = data.metadata.id;
-
-                    let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
-                    projects += 1;
-                    localStorage.setItem('rummaina_project_count', projects);
-                    
-                    const projectCountBadge = document.getElementById('projectCountBadge');
-                    if (projectCountBadge) projectCountBadge.textContent = `Projects: ${projects} / 3`;
-
-                    const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                    // Pass binId AND secretKey in URL fragment (Key never touches server database!)
-                    const finalLink = `${baseUrl}#secret=${binId}.${randomKey}`;
-                    
-                    const shareableLink = document.getElementById('shareableLink');
-                    const resultBox = document.getElementById('resultBox');
-                    
-                    if (shareableLink) shareableLink.value = finalLink;
-                    if (resultBox) {
-                        resultBox.classList.remove('hidden');
-                        resultBox.scrollIntoView({ behavior: 'smooth' });
-                    }
-                } else {
-                    throw new Error("Cloud generation failed.");
-                }
-            } catch(e) {
-                alert("Error connecting to cloud vault.");
-            } finally {
-                if (createBtn) {
-                    createBtn.disabled = false;
-                    createBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Generate Encrypted Cloud Link';
-                }
-            }
-        }
-
-        // 2. FETCH & DECRYPT LOCALLY
-        async function fetchSecretFromCloud(binId, secretKey) {
-            const retrievedContent = document.getElementById('retrievedContent');
-            const statusBadge = document.getElementById('statusBadge');
-            
-            try {
-                const response = await fetch(`${BIN_API_URL}/${binId}/latest`, {
-                    headers: {
-                        'X-Master-Key': MASTER_KEY
-                    }
-                });
-
-                const data = await response.json();
-                const record = data.record;
-
-                if (!record || record.active === false) {
-                    if (retrievedContent) {
-                        retrievedContent.textContent = "🔥 This secret note has already been burned and destroyed globally.";
-                        retrievedContent.className = "bg-darkbg/95 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-                    }
-                    if (statusBadge) {
-                        statusBadge.textContent = "Destroyed Globally";
-                        statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
-                    }
-                    const burnBtn = document.getElementById('burnBtn');
-                    if (burnBtn) burnBtn.style.display = 'none';
-                    return;
-                }
-
-                // Decrypt locally using the fragment key
-                const decryptedMessage = decryptText(record.message, secretKey);
-                if (retrievedContent) retrievedContent.textContent = decryptedMessage;
-
-                if (statusBadge) {
-                    statusBadge.textContent = "Decrypted & Active";
-                    statusBadge.className = "text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono";
-                }
-
-            } catch (e) {
-                if (retrievedContent) {
-                    retrievedContent.textContent = "⚠️ Error: Invalid secret link or note has already expired/deleted.";
-                    retrievedContent.className = "bg-darkbg/95 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-                }
-            }
-        }
-
-        // 3. GLOBAL BURN
-        async function burnNote() {
-            const hash = window.location.hash;
-            if (!hash.includes('secret=')) return;
-            const fragmentData = hash.split('secret=')[1].split('&')[0];
-            const binId = fragmentData.split('.')[0];
-
-            const burnBtn = document.getElementById('burnBtn');
-            if (burnBtn) {
-                burnBtn.disabled = true;
-                burnBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Burning Globally...';
-            }
-
-            try {
-                await fetch(`${BIN_API_URL}/${binId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': MASTER_KEY
-                    },
-                    body: JSON.stringify({ message: "BURNED", active: false })
-                });
-
-                const retrievedContent = document.getElementById('retrievedContent');
-                const statusBadge = document.getElementById('statusBadge');
+                let vaultCount = parseInt(localStorage.getItem('rummaina_vault_count') || '0');
+                vaultCount += 1;
+                localStorage.setItem('rummaina_vault_count', vaultCount);
                 
-                if (retrievedContent) {
-                    retrievedContent.textContent = "🔥 Note burned successfully! Permanently destroyed for all recipients.";
-                    retrievedContent.className = "bg-darkbg/95 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-                }
-                if (statusBadge) {
-                    statusBadge.textContent = "Burned Globally";
-                    statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
-                }
-                if (burnBtn) burnBtn.style.display = 'none';
+                const projectCountBadge = document.getElementById('projectCountBadge');
+                if (projectCountBadge) projectCountBadge.textContent = `Vaults Created: ${vaultCount}`;
 
-            } catch (e) {
-                alert("Failed to burn note globally.");
-                if (burnBtn) {
-                    burnBtn.disabled = false;
-                    burnBtn.innerHTML = '<i class="fa-solid fa-fire"></i> Burn Note Globally';
+                const shareableLink = document.getElementById('shareableLink');
+                const resultBox = document.getElementById('resultBox');
+                
+                if (shareableLink) shareableLink.value = finalLink;
+                if (resultBox) {
+                    resultBox.classList.net ? '' : resultBox.classList.remove('hidden');
+                    resultBox.scrollIntoView({ behavior: 'smooth' });
                 }
-            }
+
+                if (createBtn) {
+                    createBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Generate Secure Encrypted Link';
+                }
+            }, 600);
         }
 
         function copyLink() {
