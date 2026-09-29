@@ -150,9 +150,7 @@
                     <div id="expressionEmoji" class="text-3xl animate-bounce">😐</div>
                     
                     <!-- 7 Stars -->
-                    <div id="starContainer" class="flex items-center space-x-1.5 sm:space-x-2">
-                        <!-- Generated via JS -->
-                    </div>
+                    <div id="starContainer" class="flex items-center space-x-1.5 sm:space-x-2"></div>
 
                     <div class="w-full max-w-md mt-3 flex gap-2">
                         <input type="text" id="feedbackComment" placeholder="Leave an expressive note or comment..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500">
@@ -162,9 +160,26 @@
             </div>
         </div>
 
-        <!-- Receiver Vault View (Hidden by default unless secret vault hash link is opened) -->
+        <!-- Receiver Vault View (Unlocked Secret Message & Burn Feature) -->
         <div id="receiverView" class="hidden space-y-6">
-            <div class="bg-slate-900/90 border border-purple-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-6">
+            <div class="bg-slate-900/90 border border-red-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl space-y-6">
+                
+                <!-- AI Voice Command / Security Instruction Banner -->
+                <div class="bg-red-950/40 border border-red-500/40 rounded-xl p-4 flex items-start space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center shrink-0 mt-0.5">
+                        <i class="fa-solid fa-robot animate-pulse"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                            <span>AI Security Command Instruction</span>
+                            <span class="text-[9px] bg-red-500 text-white px-1.5 py-0.5 rounded">CRITICAL</span>
+                        </h4>
+                        <p class="text-xs text-red-200 font-mono leading-relaxed">
+                            "To delete your message permanently, press this Burn this message button. Once burned, this data is erased forever from the matrix."
+                        </p>
+                    </div>
+                </div>
+
                 <div class="text-center space-y-2">
                     <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 mx-auto flex items-center justify-center text-xl shadow-inner">
                         <i class="fa-solid fa-lock-open"></i>
@@ -193,11 +208,29 @@
                     </div>
                 </div>
 
-                <div class="pt-2">
-                    <button onclick="window.location.hash = ''; window.location.reload();" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs transition">
-                        <i class="fa-solid fa-arrow-left mr-1.5"></i> Create Your Own Secure Vault
+                <!-- Burn / Permanent Delete Action Button -->
+                <div class="pt-4 border-t border-slate-800 space-y-3">
+                    <button onclick="burnMessageForever()" class="w-full py-4 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-xs shadow-lg shadow-red-600/30 transition flex items-center justify-center gap-2 uppercase tracking-wider">
+                        <i class="fa-solid fa-fire text-base"></i> Burn This Message (Delete Permanently)
                     </button>
+                    <p class="text-[11px] text-center text-slate-500 font-mono">Warning: Action is irreversible. Link will become dead forever.</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- Burned Confirmation View (Shown when message is successfully burned) -->
+        <div id="burnedView" class="hidden space-y-6 text-center py-12">
+            <div class="max-w-md mx-auto bg-slate-900/90 border border-red-500/40 rounded-2xl p-8 space-y-4 shadow-2xl">
+                <div class="w-16 h-16 rounded-full bg-red-500/20 text-red-500 mx-auto flex items-center justify-center text-2xl animate-bounce">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white">Message Burned Permanently</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    This message has been completely destroyed. Even if this link is opened again, no data will be recovered.
+                </p>
+                <button onclick="window.location.href = window.location.pathname;" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition">
+                    Create New Secure Vault
+                </button>
             </div>
         </div>
 
@@ -205,8 +238,8 @@
         <div id="errorView" class="hidden space-y-6">
             <div class="bg-red-950/40 border border-red-500/40 rounded-2xl p-6 text-center space-y-3">
                 <i class="fa-solid fa-triangle-exclamation text-red-400 text-2xl"></i>
-                <h3 class="text-sm font-bold text-white">⚠️ No active secret found in URL</h3>
-                <p class="text-xs text-slate-400">The link you opened doesn't contain a valid secret vault payload. To send a secret, create a new vault below.</p>
+                <h3 class="text-sm font-bold text-white">⚠️ No active secret found or Message was Burned</h3>
+                <p class="text-xs text-slate-400">The link you opened either doesn't exist or has already been permanently burned and destroyed.</p>
                 <a href="?" class="inline-block mt-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition">Create New Vault</a>
             </div>
         </div>
@@ -221,9 +254,7 @@
                 <button onclick="closeRatingModal()" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark text-base"></i></button>
             </div>
             <p class="text-xs text-slate-400">Tap stars to support our development team:</p>
-            <div class="flex justify-center space-x-2 py-2" id="modalStars">
-                <!-- 7 stars for modal -->
-            </div>
+            <div class="flex justify-center space-x-2 py-2" id="modalStars"></div>
             <button onclick="saveWebsiteRating()" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition">Submit Rating</button>
         </div>
     </div>
@@ -275,7 +306,6 @@
                 container.appendChild(btn);
             });
 
-            // Update Emoji & Text
             const exp = expressions[currentSelectedStars - 1];
             document.getElementById('expressionEmoji').innerText = exp.emoji;
             document.getElementById('feedbackPromptText').innerText = `${exp.star}/7 Stars: ${exp.text}`;
@@ -287,7 +317,6 @@
         }
 
         function submitFeedback() {
-            const comment = document.getElementById('feedbackComment').value;
             alert(`Thank you! Your ${currentSelectedStars}-star feedback has been recorded successfully.`);
             document.getElementById('feedbackComment').value = '';
         }
@@ -340,14 +369,10 @@
                     mediaRecorder = new MediaRecorder(stream);
                     audioChunks = [];
 
-                    mediaRecorder.ondataavailable = event => {
-                        audioChunks.push(event.data);
-                    };
-
+                    mediaRecorder.ondataavailable = event => audioChunks.push(event.data);
                     mediaRecorder.onstop = () => {
                         recordedAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                        const audioUrl = URL.createObjectURL(recordedAudioBlob);
-                        audioPreview.src = audioUrl;
+                        audioPreview.src = URL.createObjectURL(recordedAudioBlob);
                         audioPreview.classList.remove('hidden');
                         recStatus.innerText = "Recorded Voice Ready";
                     };
@@ -368,13 +393,10 @@
             }
         }
 
-        // Character counter
         document.getElementById('secretMessage').addEventListener('input', function(e) {
-            const len = e.target.value.length;
-            document.getElementById('charCounter').innerText = `${len} characters`;
+            document.getElementById('charCounter').innerText = `${e.target.value.length} characters`;
         });
 
-        // File Handler
         function handleFileSelect(event) {
             const file = event.target.files[0];
             if(file) {
@@ -387,7 +409,6 @@
             }
         }
 
-        // Vault Generation & Parsing
         function generateVaultLink() {
             const message = document.getElementById('secretMessage').value;
             if(!message.trim() && !attachedFileData && !recordedAudioBlob) {
@@ -398,21 +419,11 @@
             if(recordedAudioBlob) {
                 const reader = new FileReader();
                 reader.onloadend = function() {
-                    const payload = {
-                        msg: message,
-                        file: attachedFileData,
-                        voice: reader.result
-                    };
-                    finalizeVaultLink(payload);
+                    finalizeVaultLink({ msg: message, file: attachedFileData, voice: reader.result });
                 };
                 reader.readAsDataURL(recordedAudioBlob);
             } else {
-                const payload = {
-                    msg: message,
-                    file: attachedFileData,
-                    voice: null
-                };
-                finalizeVaultLink(payload);
+                finalizeVaultLink({ msg: message, file: attachedFileData, voice: null });
             }
         }
 
@@ -432,25 +443,33 @@
             alert('Secure vault link copied to clipboard!');
         }
 
-        // Check if URL has Hash on Load
+        // Permanent Burn Logic (Deletes message and marks hash as burned)
+        function burnMessageForever() {
+            // Change hash to #burned so opening it again shows error/burned view
+            window.location.hash = '#burned';
+            document.getElementById('receiverView').classList.add('hidden');
+            document.getElementById('burnedView').classList.remove('hidden');
+        }
+
+        // Check URL Hash on Load
         window.addEventListener('DOMContentLoaded', () => {
             renderStars();
             const hash = window.location.hash;
             
-            if(hash && hash.includes('#vault=')) {
+            if(hash === '#burned') {
+                document.getElementById('creatorView').classList.add('hidden');
+                document.getElementById('burnedView').classList.remove('hidden');
+            } else if(hash && hash.includes('#vault=')) {
                 try {
                     const encodedData = hash.split('#vault=')[1];
                     const jsonString = decodeURIComponent(escape(atob(encodedData)));
                     const payload = JSON.parse(jsonString);
 
-                    // Switch views
                     document.getElementById('creatorView').classList.add('hidden');
                     document.getElementById('receiverView').classList.remove('hidden');
 
-                    // Populate Message
                     document.getElementById('receivedMessageDisplay').innerText = payload.msg || "No text message attached.";
 
-                    // Populate File
                     if(payload.file) {
                         document.getElementById('receivedFileBox').classList.remove('hidden');
                         document.getElementById('receivedFileContent').innerHTML = `
@@ -459,7 +478,6 @@
                         `;
                     }
 
-                    // Populate Voice Mail
                     if(payload.voice) {
                         document.getElementById('receivedVoiceBox').classList.remove('hidden');
                         document.getElementById('receivedAudioPlayer').src = payload.voice;
@@ -469,9 +487,6 @@
                     document.getElementById('creatorView').classList.add('hidden');
                     document.getElementById('errorView').classList.remove('hidden');
                 }
-            } else if (hash && hash !== '' && !hash.includes('#vault=')) {
-                // If opening generic tabs like #pro-lounge, just let creator view stay active nicely
-                document.getElementById('creatorView').classList.remove('hidden');
             }
         });
     </script>
