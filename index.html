@@ -34,7 +34,7 @@
     <!-- Complex Header -->
     <header class="border-b border-gray-800/80 bg-darkbg/90 backdrop-blur-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 h-18 flex items-center justify-between py-3">
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('sender')">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-accent to-accentglow flex items-center justify-center shadow-lg shadow-cyan-500/20 border border-white/10">
                     <span class="text-darkbg font-extrabold text-xl font-mono">R</span>
                 </div>
@@ -112,7 +112,7 @@
                 </div>
 
                 <!-- Generate Button -->
-                <button onclick="createSecureLink()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-accent to-accentglow text-darkbg font-bold text-xs uppercase tracking-wider font-mono shadow-xl shadow-cyan-500/20 hover:opacity-95 transition-all flex items-center justify-center space-x-2">
+                <button onclick="createSecureLink()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-accent to-accentglow text-darkbg font-bold text-xs uppercase tracking-wider font-mono shadow-xl shadow-cyan-500/20 hover:opacity-95 transition-all flex items-center justify-center space-x-2 cursor-pointer">
                     <span>🔒 Generate Secure Link & Count Project</span>
                 </button>
             </div>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="flex items-center space-x-2">
                     <input type="text" id="shareableLink" readonly class="w-full bg-darkbg border border-gray-800 rounded-xl px-4 py-3 text-xs font-mono text-gray-300 focus:outline-none shadow-inner">
-                    <button onclick="copyLink()" class="bg-gray-800 hover:bg-gray-700 text-white px-5 py-3 rounded-xl text-xs font-semibold font-mono transition-all border border-gray-700">Copy</button>
+                    <button onclick="copyLink()" class="bg-gray-800 hover:bg-gray-700 text-white px-5 py-3 rounded-xl text-xs font-semibold font-mono transition-all border border-gray-700 cursor-pointer">Copy</button>
                 </div>
             </div>
         </div>
@@ -142,7 +142,7 @@
                     Loading and decrypting secure package...
                 </div>
 
-                <button onclick="switchView('sender')" class="w-full py-3.5 rounded-xl bg-gray-800/80 hover:bg-gray-800 text-gray-300 font-semibold text-xs tracking-wide font-mono transition-all border border-gray-700/50">
+                <button onclick="switchView('sender')" class="w-full py-3.5 rounded-xl bg-gray-800/80 hover:bg-gray-800 text-gray-300 font-semibold text-xs tracking-wide font-mono transition-all border border-gray-700/50 cursor-pointer">
                     ← Create Another Secure Note
                 </button>
             </div>
@@ -155,7 +155,7 @@
         <p>&copy; 2026 Rummaina CipherVault. All rights reserved.</p>
     </footer>
 
-    <!-- Complex JavaScript Logic with Bug Fix -->
+    <!-- JavaScript Logic -->
     <script>
         const secretInput = document.getElementById('secretInput');
         const charCount = document.getElementById('charCount');
