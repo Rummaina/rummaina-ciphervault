@@ -74,8 +74,8 @@
         <!-- VIEW 1: CREATOR / MAIN VAULT VIEW -->
         <div id="mainView" class="space-y-8">
             <div class="text-center mb-6">
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">Secure Sharing Without Limits</span></h1>
-                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Send self-destructing text notes and files up to 100 GB (Free) or 1 TB (Pro Trial) with zero-knowledge encryption.</p>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">One-Time Secure Self-Destruct</span></h1>
+                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Send secure messages that automatically vanish permanently after being read once by the recipient.</p>
             </div>
 
             <div class="bg-cardbg border border-gray-800/80 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
@@ -109,14 +109,14 @@
 
                     <div class="flex items-end">
                         <button onclick="createSecureLink()" class="w-full bg-accent hover:bg-accenthover text-black font-extrabold py-4 px-6 rounded-2xl transition-all shadow-xl shadow-cyan-500/20 flex items-center justify-center gap-2 group cursor-pointer text-sm">
-                            <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate Secure Link & Count Project
+                            <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate One-Time Secure Link
                         </button>
                     </div>
 
                     <!-- RESULT BOX -->
                     <div id="resultBox" class="hidden mt-6 p-5 rounded-2xl bg-darkbg border border-emerald-500/30 shadow-xl">
                         <div class="flex items-center justify-between mb-2">
-                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Encrypted Link Generated Successfully</p>
+                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> One-Time Link Generated Successfully</p>
                         </div>
                         <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
                             <input type="text" id="shareableLink" readonly class="w-full bg-cardbg border border-gray-900 rounded-xl px-4 py-2.5 text-sm text-gray-300 font-mono focus:outline-none select-all">
@@ -138,7 +138,7 @@
                     </div>
                     <div>
                         <h2 class="text-2xl font-black text-white">VIP Pro Lounge & Secure Reader</h2>
-                        <p class="text-xs text-gray-400">Military-grade AES-256 decryption & AI self-destruct warning system.</p>
+                        <p class="text-xs text-gray-400">One-time self-destructing decryption protocol active.</p>
                     </div>
                 </div>
                 <span class="text-xs px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold flex items-center gap-1.5 shadow-sm">
@@ -152,9 +152,9 @@
                 
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-black text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> Decrypted Quantum Secure Message
+                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> One-Time Secret Message Payload
                     </h3>
-                    <span class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono">AES-256 Verified</span>
+                    <span id="statusBadge" class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono">Ready to Burn</span>
                 </div>
 
                 <!-- Anti-Screenshot Blur Wrapper -->
@@ -166,7 +166,7 @@
 
                 <div class="flex items-center justify-between flex-wrap gap-4 pt-2">
                     <p class="text-xs text-gray-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-robot text-amber-400"></i> AI Voice Self-Destruct Warning Armed.
+                        <i class="fa-solid fa-robot text-amber-400"></i> Automatic Self-Destruct Armed upon reading.
                     </p>
                     <div class="flex items-center gap-3">
                         <button onclick="switchView('main')" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-xs flex items-center gap-2 cursor-pointer">
@@ -185,8 +185,8 @@
                     <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 border border-purple-500/20">
                         <i class="fa-solid fa-microchip text-lg"></i>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-1">Quantum AES-256 Shield</h4>
-                    <p class="text-xs text-gray-400">Client-side military grade encryption preventing server breaches or snooping.</p>
+                    <h4 class="text-base font-bold text-white mb-1">One-Time Burn Shield</h4>
+                    <p class="text-xs text-gray-400">Destroys the message immediately after first read so nobody can view it twice.</p>
                 </div>
 
                 <div class="bg-cardbg border border-gray-800 p-6 rounded-3xl shadow-xl hover:border-amber-500/50 transition-all">
@@ -226,8 +226,7 @@
         const blurWrapper = document.getElementById('blurWrapper');
         const realFileInput = document.getElementById('realFileInput');
         const fileUploadText = document.getElementById('fileUploadText');
-
-        let currentMessageId = null;
+        const statusBadge = document.getElementById('statusBadge');
 
         function switchView(viewName) {
             if (viewName === 'pro') {
@@ -288,21 +287,38 @@
             projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
             const hash = window.location.hash;
-            if (hash.includes('secret=')) {
+            if (hash.includes('token=')) {
                 switchView('pro');
-                try {
-                    const encodedData = hash.split('secret=')[1];
-                    const decodedMessage = decodeURIComponent(escape(atob(encodedData)));
-                    retrievedContent.textContent = decodedMessage;
-                    currentMessageId = encodedData;
+                const token = hash.split('token=')[1];
+                
+                // Check localStorage for the stored secret message payload
+                const encryptedData = localStorage.getItem('rummaina_secret_' + token);
 
-                    if ('speechSynthesis' in window) {
-                        const utterance = new SpeechSynthesisUtterance("Warning. Secure message loaded successfully.");
-                        utterance.rate = 1.0;
-                        window.speechSynthesis.speak(utterance);
+                if (encryptedData) {
+                    try {
+                        const decodedMessage = decodeURIComponent(escape(atob(encryptedData)));
+                        retrievedContent.textContent = decodedMessage;
+                        
+                        // ONE-TIME BURN: Message read hote hi localStorage se permanently delete kar do
+                        localStorage.removeItem('rummaina_secret_' + token);
+                        
+                        statusBadge.textContent = "Burned After Read";
+                        statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+
+                        if ('speechSynthesis' in window) {
+                            const utterance = new SpeechSynthesisUtterance("Warning. One-time secure message loaded and permanently destroyed.");
+                            utterance.rate = 1.0;
+                            window.speechSynthesis.speak(utterance);
+                        }
+                    } catch (e) {
+                        retrievedContent.textContent = "🔥 Error decoding secure payload!";
                     }
-                } catch (e) {
-                    retrievedContent.textContent = "🔥 Invalid or corrupted secure payload!";
+                } else {
+                    // Agar message pehle hi read ho chuka hai ya gayab ho gaya hai
+                    retrievedContent.textContent = "⚠️ This message has already been read and permanently burned / destroyed, or the link is invalid!";
+                    retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+                    statusBadge.textContent = "Already Burned";
+                    statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
                 }
             } else if (hash.includes('pro-lounge')) {
                 switchView('pro');
@@ -330,7 +346,12 @@
             }
 
             try {
+                // Unique random token generate karein
+                const token = Math.random().toString(36.substring(2)) + Date.now().toString(36);
                 const encodedData = btoa(unescape(encodeURIComponent(textValue)));
+
+                // LocalStorage mein token ke against message save karein
+                localStorage.setItem('rummaina_secret_' + token, encodedData);
 
                 let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
                 projects += 1;
@@ -338,7 +359,7 @@
                 projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
                 const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                const finalLink = `${baseUrl}#secret=${encodedData}`;
+                const finalLink = `${baseUrl}#token=${token}`;
                 shareableLink.value = finalLink;
                 resultBox.classList.remove('hidden');
                 resultBox.scrollIntoView({ behavior: 'smooth' });
@@ -357,8 +378,9 @@
         function burnNote() {
             retrievedContent.textContent = "🔥 Message permanently burned and destroyed.";
             retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
+            statusBadge.textContent = "Manually Burned";
+            statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
             history.replaceState(null, "", window.location.pathname);
-            currentMessageId = null;
         }
     </script>
 </body>
