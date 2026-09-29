@@ -263,34 +263,22 @@
             const retrievedContent = document.getElementById('retrievedContent');
             const statusBadge = document.getElementById('statusBadge');
 
-            if (hash.includes('token=')) {
+            if (hash.includes('secret=')) {
                 switchView('pro');
-                const token = hash.split('token=')[1];
-                const encryptedData = localStorage.getItem('rummaina_secret_' + token);
+                const encodedPayload = hash.split('secret=')[1];
 
-                if (encryptedData) {
-                    try {
-                        const decodedMessage = decodeURIComponent(escape(atob(encryptedData)));
-                        if (retrievedContent) retrievedContent.textContent = decodedMessage;
-                        
-                        // Burn note immediately after reading
-                        localStorage.removeItem('rummaina_secret_' + token);
-                        
-                        if (statusBadge) {
-                            statusBadge.textContent = "Burned After Read";
-                            statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
-                        }
-                    } catch (e) {
-                        if (retrievedContent) retrievedContent.textContent = "🔥 Error decoding secure payload!";
-                    }
-                } else {
-                    if (retrievedContent) {
-                        retrievedContent.textContent = "⚠️ This message has already been read and permanently burned / destroyed, or the link is invalid!";
-                        retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
-                    }
+                try {
+                    const decodedMessage = decodeURIComponent(escape(atob(encodedPayload)));
+                    if (retrievedContent) retrievedContent.textContent = decodedMessage;
+                    
                     if (statusBadge) {
-                        statusBadge.textContent = "Already Burned";
+                        statusBadge.textContent = "Self-Destruct Armed";
                         statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+                    }
+                } catch (e) {
+                    if (retrievedContent) {
+                        retrievedContent.textContent = "⚠️ Error decoding secure payload or invalid link format!";
+                        retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
                     }
                 }
             } else if (hash.includes('pro-lounge')) {
@@ -327,10 +315,7 @@
             }
 
             try {
-                const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
                 const encodedData = btoa(unescape(encodeURIComponent(textValue)));
-
-                localStorage.setItem('rummaina_secret_' + token, encodedData);
 
                 let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
                 projects += 1;
@@ -340,7 +325,7 @@
                 if (projectCountBadge) projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
                 const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                const finalLink = `${baseUrl}#token=${token}`;
+                const finalLink = `${baseUrl}#secret=${encodedData}`;
                 
                 const shareableLink = document.getElementById('shareableLink');
                 const resultBox = document.getElementById('resultBox');
@@ -377,7 +362,6 @@
                 retrievedContent.className = "bg-darkbg/90 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
             }
             if (statusBadge) {
-                statusBadge.timestamp = "Manually Burned";
                 statusBadge.textContent = "Manually Burned";
                 statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
             }
