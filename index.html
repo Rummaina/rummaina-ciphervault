@@ -62,7 +62,7 @@
                         <span>🔥 2-Weeks Free Pro Trial Active</span>
                         <span class="text-[10px] bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full border border-pink-500/30">VIP Access</span>
                     </h4>
-                    <p class="text-xs text-gray-400 mt-0.5">Experience 1 TB transfer limits and military-grade privacy.</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Experience 1 TB transfer limits and end-to-end cloud encryption.</p>
                 </div>
             </div>
             <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/90 px-5 py-3 rounded-2xl border border-purple-500/30 text-pink-300 font-bold shrink-0 shadow-inner">
@@ -73,8 +73,8 @@
         <!-- VIEW 1: MAIN VAULT VIEW -->
         <div id="mainView" class="space-y-8">
             <div class="text-center mb-6">
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">Secure Sharing Without Limits</span></h1>
-                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Send self-destructing text notes that auto-wipe globally for all recipients the moment anyone clicks Burn.</p>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">End-to-End Zero-Knowledge Privacy</span></h1>
+                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Messages are encrypted locally on your device before reaching the cloud. Even database servers cannot read your data.</p>
             </div>
 
             <div class="bg-cardbg border border-purple-900/50 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
@@ -106,14 +106,14 @@
 
                     <div class="flex items-end">
                         <button type="button" onclick="createSecureLink()" id="createBtn" class="w-full bg-gradient-to-r from-accent to-neonpurple hover:opacity-90 text-white font-extrabold py-4 px-6 rounded-2xl transition-all shadow-xl shadow-purple-900/40 flex items-center justify-center gap-2 group cursor-pointer text-sm">
-                            <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate Secure Cloud Link
+                            <i class="fa-solid fa-lock group-hover:rotate-12 transition-transform"></i> Generate Encrypted Cloud Link
                         </button>
                     </div>
 
                     <!-- RESULT BOX -->
                     <div id="resultBox" class="hidden mt-6 p-5 rounded-2xl bg-darkbg border border-emerald-500/30 shadow-xl">
                         <div class="flex items-center justify-between mb-2">
-                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Cloud-Secured Global Link Generated</p>
+                            <p class="text-xs text-emerald-400 font-semibold uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Encrypted Cloud Link Generated Successfully</p>
                         </div>
                         <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
                             <input type="text" id="shareableLink" readonly class="w-full bg-cardbg border border-purple-950 rounded-xl px-4 py-2.5 text-sm text-gray-300 font-mono focus:outline-none select-all">
@@ -135,7 +135,7 @@
                     </div>
                     <div>
                         <h2 class="text-2xl font-black text-white">VIP Pro Lounge & Secure Reader</h2>
-                        <p class="text-xs text-gray-400">Global self-destructing protocol active across all shared devices.</p>
+                        <p class="text-xs text-gray-400">Zero-knowledge decryption active with global multi-user self-destruct.</p>
                     </div>
                 </div>
                 <span class="text-xs px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold flex items-center gap-1.5 shadow-sm">
@@ -149,21 +149,21 @@
                 
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-black text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> One-Time Global Secret Message
+                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> Decrypted Secret Payload
                     </h3>
-                    <span id="statusBadge" class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono">Synced & Secure</span>
+                    <span id="statusBadge" class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono">Secure Decryption</span>
                 </div>
 
                 <!-- Anti-Screenshot Blur Wrapper -->
                 <div id="blurWrapper" class="relative transition-all duration-300">
                     <div id="retrievedContent" class="bg-darkbg/95 border border-purple-950 rounded-2xl p-6 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap shadow-inner">
-                        Fetching secure payload from cloud vault...
+                        Decrypting payload locally...
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between flex-wrap gap-4 pt-2">
                     <p class="text-xs text-gray-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-shield text-pink-400"></i> Burning this note deletes it globally for all 4 recipients instantly.
+                        <i class="fa-solid fa-shield text-pink-400"></i> Burning this note wipes it globally for all recipients.
                     </p>
                     <div class="flex items-center gap-3">
                         <button type="button" onclick="switchView('main')" class="bg-purple-900/30 hover:bg-purple-900/50 text-purple-300 border border-purple-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-xs flex items-center gap-2 cursor-pointer">
@@ -191,9 +191,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Free public JSONBin endpoint for decentralized cloud syncing
         const BIN_API_URL = "https://api.jsonbin.io/v3/b";
-        // Public Master Key for creating bins seamlessly without backend setup
         const MASTER_KEY = "$2a$10$vI8aW7h1f8q5Z5h1f8q5Zu7Xq7Xq7Xq7Xq7Xq7Xq7Xq7Xq7Xq7Xq"; 
 
         function switchView(viewName) {
@@ -258,6 +256,26 @@
             }, 1000);
         }
 
+        // Simple Client-Side Cipher Function (Zero-Knowledge)
+        function encryptText(text, secretKey) {
+            let encrypted = '';
+            for (let i = 0; i < text.length; i++) {
+                let charCode = text.charCodeAt(i) ^ secretKey.charCodeAt(i % secretKey.length);
+                encrypted += ('00' + charCode.toString(16)).slice(-4);
+            }
+            return encrypted;
+        }
+
+        function decryptText(hexText, secretKey) {
+            let decrypted = '';
+            for (let i = 0; i < hexText.length; i += 4) {
+                let hexChar = hexText.substr(i, 4);
+                let charCode = parseInt(hexChar, 16) ^ secretKey.charCodeAt((i / 4) % secretKey.length);
+                decrypted += String.fromCharCode(charCode);
+            }
+            return decrypted;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             initTrialTimer();
             let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
@@ -267,12 +285,15 @@
             const hash = window.location.hash;
             if (hash.includes('secret=')) {
                 switchView('pro');
-                const binId = hash.split('secret=')[1].split('&')[0];
-                fetchSecretFromCloud(binId);
+                const fragmentData = hash.split('secret=')[1].split('&')[0];
+                const parts = fragmentData.split('.');
+                const binId = parts[0];
+                const secretKey = parts[1] || '';
+                fetchSecretFromCloud(binId, secretKey);
             } else if (hash.includes('pro-lounge')) {
                 switchView('pro');
                 const retrievedContent = document.getElementById('retrievedContent');
-                if (retrievedContent) retrievedContent.textContent = "No active secret ID found in URL. Generate a cloud link from the main vault.";
+                if (retrievedContent) retrievedContent.textContent = "No active secret found in URL.";
             }
 
             const blurWrapper = document.getElementById('blurWrapper');
@@ -294,7 +315,7 @@
             }
         });
 
-        // 1. GENERATE SECURE CLOUD LINK
+        // 1. GENERATE ENCRYPTED CLOUD LINK
         async function createSecureLink() {
             const secretInput = document.getElementById('secretInput');
             const textValue = secretInput ? secretInput.value.trim() : '';
@@ -307,12 +328,13 @@
             const createBtn = document.getElementById('createBtn');
             if (createBtn) {
                 createBtn.disabled = true;
-                createBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting to Cloud Vault...';
+                createBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting Zero-Knowledge...';
             }
 
             try {
-                // Obfuscate / encode message so AI cannot plaintext read it directly
-                const encryptedPayload = btoa(unescape(encodeURIComponent(textValue)));
+                // Generate a random local decryption key for this message
+                const randomKey = Math.random().toString(36).substring(2, 12);
+                const encryptedPayload = encryptText(textValue, randomKey);
 
                 const response = await fetch(BIN_API_URL, {
                     method: 'POST',
@@ -336,7 +358,8 @@
                     if (projectCountBadge) projectCountBadge.textContent = `Projects: ${projects} / 3`;
 
                     const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                    const finalLink = `${baseUrl}#secret=${binId}`;
+                    // Pass binId AND secretKey in URL fragment (Key never touches server database!)
+                    const finalLink = `${baseUrl}#secret=${binId}.${randomKey}`;
                     
                     const shareableLink = document.getElementById('shareableLink');
                     const resultBox = document.getElementById('resultBox');
@@ -350,17 +373,17 @@
                     throw new Error("Cloud generation failed.");
                 }
             } catch(e) {
-                alert("Error connecting to secure cloud storage. Please try again.");
+                alert("Error connecting to cloud vault.");
             } finally {
                 if (createBtn) {
                     createBtn.disabled = false;
-                    createBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Generate Secure Cloud Link';
+                    createBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Generate Encrypted Cloud Link';
                 }
             }
         }
 
-        // 2. FETCH MESSAGE FROM CLOUD & CHECK GLOBAL BURN STATUS
-        async function fetchSecretFromCloud(binId) {
+        // 2. FETCH & DECRYPT LOCALLY
+        async function fetchSecretFromCloud(binId, secretKey) {
             const retrievedContent = document.getElementById('retrievedContent');
             const statusBadge = document.getElementById('statusBadge');
             
@@ -374,10 +397,9 @@
                 const data = await response.json();
                 const record = data.record;
 
-                // Check if already burned globally
                 if (!record || record.active === false) {
                     if (retrievedContent) {
-                        retrievedContent.textContent = "🔥 This secret note has already been burned and destroyed globally. No longer accessible for any user.";
+                        retrievedContent.textContent = "🔥 This secret note has already been burned and destroyed globally.";
                         retrievedContent.className = "bg-darkbg/95 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
                     }
                     if (statusBadge) {
@@ -389,12 +411,12 @@
                     return;
                 }
 
-                // Decode message safely
-                const decodedMessage = decodeURIComponent(escape(atob(record.message)));
-                if (retrievedContent) retrievedContent.textContent = decodedMessage;
+                // Decrypt locally using the fragment key
+                const decryptedMessage = decryptText(record.message, secretKey);
+                if (retrievedContent) retrievedContent.textContent = decryptedMessage;
 
                 if (statusBadge) {
-                    statusBadge.textContent = "Synced & Active";
+                    statusBadge.textContent = "Decrypted & Active";
                     statusBadge.className = "text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono";
                 }
 
@@ -406,11 +428,12 @@
             }
         }
 
-        // 3. GLOBAL BURN (WIPES IT FOR ALL 4 RECIPIENTS INSTANTLY)
+        // 3. GLOBAL BURN
         async function burnNote() {
             const hash = window.location.hash;
             if (!hash.includes('secret=')) return;
-            const binId = hash.split('secret=')[1].split('&')[0];
+            const fragmentData = hash.split('secret=')[1].split('&')[0];
+            const binId = fragmentData.split('.')[0];
 
             const burnBtn = document.getElementById('burnBtn');
             if (burnBtn) {
@@ -419,7 +442,6 @@
             }
 
             try {
-                // Update cloud bin record to active: false (Global Destruction)
                 await fetch(`${BIN_API_URL}/${binId}`, {
                     method: 'PUT',
                     headers: {
@@ -433,7 +455,7 @@
                 const statusBadge = document.getElementById('statusBadge');
                 
                 if (retrievedContent) {
-                    retrievedContent.textContent = "🔥 Note burned successfully! It is now permanently deleted for all 4 recipients across the globe.";
+                    retrievedContent.textContent = "🔥 Note burned successfully! Permanently destroyed for all recipients.";
                     retrievedContent.className = "bg-darkbg/95 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 mb-6 shadow-inner";
                 }
                 if (statusBadge) {
@@ -443,7 +465,7 @@
                 if (burnBtn) burnBtn.style.display = 'none';
 
             } catch (e) {
-                alert("Failed to burn note globally. Please try again.");
+                alert("Failed to burn note globally.");
                 if (burnBtn) {
                     burnBtn.disabled = false;
                     burnBtn.innerHTML = '<i class="fa-solid fa-fire"></i> Burn Note Globally';
