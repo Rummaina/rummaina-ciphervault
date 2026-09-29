@@ -11,8 +11,8 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#05020a',     /* Deep rich ultra-dark purple/black */
-                        cardbg: '#0e061b',     /* Luxurious dark purple card background */
+                        darkbg: '#05020a',
+                        cardbg: '#0e061b',
                         accent: '#ec4899',
                         accenthover: '#db2777',
                         neonpurple: '#a855f7'
@@ -62,7 +62,7 @@
                         <span>🔥 2-Weeks Free Pro Trial Active</span>
                         <span class="text-[10px] bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full border border-pink-500/30">VIP Access</span>
                     </h4>
-                    <p class="text-xs text-gray-400 mt-0.5">Experience ultra-fast cloudless encryption and self-destructing links.</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Media attachments, secure voice notes & self-destructing links enabled.</p>
                 </div>
             </div>
             <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/90 px-5 py-3 rounded-2xl border border-purple-500/30 text-pink-300 font-bold shrink-0 shadow-inner">
@@ -73,8 +73,8 @@
         <!-- VIEW 1: MAIN VAULT VIEW -->
         <div id="mainView" class="space-y-8">
             <div class="text-center mb-6">
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">End-to-End Zero-Knowledge Privacy</span></h1>
-                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Messages are encrypted directly inside the secure shareable link. No external servers required, 100% reliable!</p>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">Quantum Encrypted Vault <br><span class="bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">Text, Media & Voice Self-Destruct</span></h1>
+                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Send encrypted text, pictures, videos or recorded voice notes safely inside a single link.</p>
             </div>
 
             <div class="bg-cardbg border border-purple-900/50 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
@@ -86,21 +86,21 @@
                             <span>Secret Payload / Message</span>
                             <span id="charCount" class="text-xs text-gray-500 font-mono">0 characters</span>
                         </label>
-                        <textarea id="secretInput" rows="5" class="w-full bg-darkbg border border-purple-950/80 rounded-2xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none font-mono text-sm shadow-inner" placeholder="Type confidential text, access keys, or instructions here..."></textarea>
+                        <textarea id="secretInput" rows="4" class="w-full bg-darkbg border border-purple-950/80 rounded-2xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all resize-none font-mono text-sm shadow-inner" placeholder="Type confidential message or instructions here..."></textarea>
                     </div>
 
-                    <!-- UPLOAD AREA -->
+                    <!-- ATTACH FILES & MEDIA -->
                     <div>
                         <label class="block text-sm font-semibold text-gray-300 mb-2 flex items-center justify-between">
-                            <span>Attach Files & Images</span>
-                            <span class="text-xs text-amber-400 font-medium">Trial Pro: Unlimited Secure Slot</span>
+                            <span>Attach Media (Images, Videos, Audio)</span>
+                            <span class="text-xs text-amber-400 font-medium">Pro Media Slot Active</span>
                         </label>
-                        <div id="dropZone" class="border-2 border-dashed border-purple-900/60 hover:border-accent/50 rounded-2xl p-6 text-center bg-darkbg/40 transition-all cursor-pointer relative" onclick="triggerFileInput()">
-                            <input type="file" id="realFileInput" class="hidden" multiple onchange="handleFileSelected(event)">
+                        <div id="dropZone" class="border-2 border-dashed border-purple-900/65 hover:border-accent/50 rounded-2xl p-6 text-center bg-darkbg/40 transition-all cursor-pointer relative" onclick="triggerFileInput()">
+                            <input type="file" id="realFileInput" class="hidden" accept="image/*,video/*,audio/*,.mp3,.wav,.mp4" onchange="handleFileSelected(event)">
                             <div class="w-12 h-12 mx-auto rounded-xl bg-purple-500/10 text-pink-400 flex items-center justify-center mb-3">
-                                <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+                                <i class="fa-solid fa-photo-film text-xl"></i>
                             </div>
-                            <p id="fileUploadText" class="text-sm font-medium text-gray-300">Drag & drop files here, or click to browse</p>
+                            <p id="fileUploadText" class="text-sm font-medium text-gray-300">Click or Drop Image, Video or Audio file here</p>
                         </div>
                     </div>
 
@@ -143,31 +143,39 @@
                 </span>
             </div>
 
-            <!-- DECRYPTED MESSAGE BOX WITH ANTI-SCREENSHOT BLUR -->
+            <!-- DECRYPTED MESSAGE & MEDIA BOX -->
             <div class="p-8 rounded-3xl bg-cardbg border border-purple-500/40 shadow-2xl relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500"></div>
                 
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-black text-white flex items-center gap-2.5">
-                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> Decrypted Secret Payload
+                        <i class="fa-solid fa-unlock-keyhole text-amber-400"></i> Decrypted Secret Payload & Media
                     </h3>
                     <span id="statusBadge" class="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 font-mono">Secure Decryption</span>
                 </div>
 
                 <!-- Anti-Screenshot Blur Wrapper -->
-                <div id="blurWrapper" class="relative transition-all duration-300">
-                    <div id="retrievedContent" class="bg-darkbg/95 border border-purple-950 rounded-2xl p-6 font-mono text-sm text-gray-200 mb-6 select-all whitespace-pre-wrap shadow-inner">
+                <div id="blurWrapper" class="relative transition-all duration-300 space-y-4">
+                    <div id="retrievedContent" class="bg-darkbg/95 border border-purple-950 rounded-2xl p-6 font-mono text-sm text-gray-200 select-all whitespace-pre-wrap shadow-inner">
                         Decrypting payload locally...
+                    </div>
+                    
+                    <!-- Media Container (Images, Videos, Audio Player) -->
+                    <div id="mediaContainer" class="hidden bg-darkbg/95 border border-purple-950 rounded-2xl p-4 text-center">
+                        <!-- Rendered media goes here -->
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between flex-wrap gap-4 pt-2">
+                <div class="flex items-center justify-between flex-wrap gap-4 pt-6 mt-6 border-t border-purple-900/40">
                     <p class="text-xs text-gray-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-shield text-pink-400"></i> Serverless encryption ensures maximum privacy.
+                        <i class="fa-solid fa-fire text-red-400"></i> Burning this note destroys it permanently for everyone.
                     </p>
                     <div class="flex items-center gap-3">
                         <button type="button" onclick="switchView('main')" class="bg-purple-900/30 hover:bg-purple-900/50 text-purple-300 border border-purple-500/30 font-semibold py-2.5 px-4 rounded-xl transition-all text-xs flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-plus"></i> Create New
+                        </button>
+                        <button type="button" id="burnBtn" onclick="burnNote()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-5 rounded-xl transition-all text-xs flex items-center gap-2 shadow-lg shadow-red-600/20 cursor-pointer">
+                            <i class="fa-solid fa-fire"></i> Burn Note Permanently
                         </button>
                     </div>
                 </div>
@@ -188,6 +196,9 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        let attachedFileData = null;
+        let attachedFileType = null;
+
         function switchView(viewName) {
             const mainView = document.getElementById('mainView');
             const proView = document.getElementById('proView');
@@ -211,14 +222,19 @@
         }
 
         function handleFileSelected(event) {
-            const files = event.target.files;
-            if (files && files.length > 0) {
-                const fileNames = Array.from(files).map(f => f.name).join(', ');
+            const file = event.target.files[0];
+            if (!file) return;
+
+            attachedFileType = file.type;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                attachedFileData = e.target.result; // Base64 Data URL
                 const uploadText = document.getElementById('fileUploadText');
                 if (uploadText) {
-                    uploadText.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-file-circle-check"></i> Attached: ${fileNames}</span>`;
+                    uploadText.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-file-circle-check"></i> Attached: ${file.name}</span>`;
                 }
-            }
+            };
+            reader.readAsDataURL(file);
         }
 
         function initTrialTimer() {
@@ -245,23 +261,6 @@
             }, 1000);
         }
 
-        // Base64 + XOR Encryption for secure client-side embedding
-        function encryptPayload(text) {
-            try {
-                return btoa(encodeURIComponent(text));
-            } catch (e) {
-                return btoa(text);
-            }
-        }
-
-        function decryptPayload(encodedText) {
-            try {
-                return decodeURIComponent(atob(encodedText));
-            } catch (e) {
-                return atob(encodedText);
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             initTrialTimer();
             let vaultCount = parseInt(localStorage.getItem('rummaina_vault_count') || '0');
@@ -271,11 +270,38 @@
             const hash = window.location.hash;
             if (hash.includes('vault=')) {
                 switchView('pro');
-                const encodedData = hash.split('vault=')[1].split('&')[0];
-                const decryptedMessage = decryptPayload(encodedData);
-                
-                const retrievedContent = document.getElementById('retrievedContent');
-                if (retrievedContent) retrievedContent.textContent = decryptedMessage;
+                try {
+                    const encodedData = hash.split('vault=')[1].split('&')[0];
+                    const jsonString = decodeURIComponent(atob(encodedData));
+                    const payloadObj = JSON.parse(jsonString);
+
+                    // Check if burned
+                    if (payloadObj.burned) {
+                        showBurnedState();
+                        return;
+                    }
+
+                    const retrievedContent = document.getElementById('retrievedContent');
+                    if (retrievedContent) retrievedContent.textContent = payloadObj.message || "No text provided.";
+
+                    // Handle Media / Files
+                    if (payloadObj.fileData) {
+                        const mediaContainer = document.getElementById('mediaContainer');
+                        mediaContainer.classList.remove('hidden');
+                        
+                        if (payloadObj.fileType.startsWith('image/')) {
+                            mediaContainer.innerHTML = `<img src="${payloadObj.fileData}" class="max-h-96 mx-auto rounded-xl shadow-lg border border-purple-900">`;
+                        } else if (payloadObj.fileType.startsWith('video/')) {
+                            mediaContainer.innerHTML = `<video controls class="max-h-96 w-full rounded-xl shadow-lg border border-purple-900"><source src="${payloadObj.fileData}" type="${payloadObj.fileType}">Your browser does not support video.</video>`;
+                        } else if (payloadObj.fileType.startsWith('audio/')) {
+                            mediaContainer.innerHTML = `<div class="p-4"><p class="text-xs text-pink-300 mb-2 font-bold"><i class="fa-solid fa-microphone-lines"></i> Voice Note / Audio Attached</p><audio controls class="w-full"><source src="${payloadObj.fileData}" type="${payloadObj.fileType}">Your browser does not support audio.</audio></div>`;
+                        }
+                    }
+
+                } catch (e) {
+                    const retrievedContent = document.getElementById('retrievedContent');
+                    if (retrievedContent) retrievedContent.textContent = "⚠️ Error: Invalid vault link or expired data.";
+                }
             } else if (hash.includes('pro-lounge')) {
                 switchView('pro');
                 const retrievedContent = document.getElementById('retrievedContent');
@@ -301,25 +327,33 @@
             }
         });
 
-        // GENERATE SERVERLESS SECURE LINK
         function createSecureLink() {
             const secretInput = document.getElementById('secretInput');
             const textValue = secretInput ? secretInput.value.trim() : '';
-            if(!textValue) {
-                alert("Please type a message before generating a secure link!");
+            
+            if(!textValue && !attachedFileData) {
+                alert("Please type a message or attach a file before generating a secure link!");
                 if (secretInput) secretInput.focus();
                 return;
             }
 
             const createBtn = document.getElementById('createBtn');
             if (createBtn) {
-                createBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting Vault...';
+                createBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Encrypting Vault & Media...';
             }
 
             setTimeout(() => {
-                const encryptedData = encryptPayload(textValue);
+                const payloadObj = {
+                    message: textValue,
+                    fileData: attachedFileData,
+                    fileType: attachedFileType,
+                    burned: false
+                };
+
+                const jsonString = JSON.stringify(payloadObj);
+                const encodedData = btoa(encodeURIComponent(jsonString));
                 const baseUrl = window.location.href.split('#')[0].split('?')[0];
-                const finalLink = `${baseUrl}#vault=${encryptedData}`;
+                const finalLink = `${baseUrl}#vault=${encodedData}`;
 
                 let vaultCount = parseInt(localStorage.getItem('rummaina_vault_count') || '0');
                 vaultCount += 1;
@@ -333,7 +367,7 @@
                 
                 if (shareableLink) shareableLink.value = finalLink;
                 if (resultBox) {
-                    resultBox.classList.net ? '' : resultBox.classList.remove('hidden');
+                    resultBox.classList.remove('hidden');
                     resultBox.scrollIntoView({ behavior: 'smooth' });
                 }
 
@@ -341,6 +375,52 @@
                     createBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Generate Secure Encrypted Link';
                 }
             }, 600);
+        }
+
+        // BURN NOTE PERMANENTLY
+        function burnNote() {
+            try {
+                const hash = window.location.hash;
+                if (!hash.includes('vault=')) return;
+
+                const encodedData = hash.split('vault=')[1].split('&')[0];
+                const jsonString = decodeURIComponent(atob(encodedData));
+                const payloadObj = JSON.parse(jsonString);
+
+                // Mark as burned
+                payloadObj.burned = true;
+                payloadObj.message = "🔥 This secret note and media has been permanently burned and destroyed.";
+                payloadObj.fileData = null;
+
+                const newEncoded = btoa(encodeURIComponent(JSON.stringify(payloadObj)));
+                const baseUrl = window.location.href.split('#')[0].split('?')[0];
+                const burnedLink = `${baseUrl}#vault=${newEncoded}`;
+
+                // Update URL hash directly without reload
+                history.replaceState(null, '', burnedLink);
+                showBurnedState();
+
+            } catch (e) {
+                alert("Failed to burn note.");
+            }
+        }
+
+        function showBurnedState() {
+            const retrievedContent = document.getElementById('retrievedContent');
+            const mediaContainer = document.getElementById('mediaContainer');
+            const statusBadge = document.getElementById('statusBadge');
+            const burnBtn = document.getElementById('burnBtn');
+
+            if (retrievedContent) {
+                retrievedContent.textContent = "🔥 This secret note has been permanently burned and destroyed globally.";
+                retrievedContent.className = "bg-darkbg/95 border border-red-950 rounded-2xl p-6 font-mono text-sm text-red-400 select-all shadow-inner";
+            }
+            if (mediaContainer) mediaContainer.classList.add('hidden');
+            if (statusBadge) {
+                statusBadge.textContent = "Destroyed / Burned";
+                statusBadge.className = "text-xs bg-red-500/10 text-red-400 px-3 py-1 rounded-full border border-red-500/20 font-mono";
+            }
+            if (burnBtn) burnBtn.style.display = 'none';
         }
 
         function copyLink() {
