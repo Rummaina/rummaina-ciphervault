@@ -63,7 +63,7 @@
                         <span>🔥 2-Weeks Free Pro Trial Active</span>
                         <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">VIP Access</span>
                     </h4>
-                    <p class="text-xs text-gray-400 mt-0.5">Experience 1 TB transfer limits and Elon-level security before paid locking.</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Experience 1 TB transfer limits and security before paid locking.</p>
                 </div>
             </div>
             <div id="trialCountdown" class="flex items-center gap-2 font-mono text-xs bg-darkbg/90 px-5 py-3 rounded-2xl border border-cyan-500/30 text-cyan-300 font-bold shrink-0 shadow-inner">
@@ -96,11 +96,14 @@
                             <span>Attach Files, Images & Videos</span>
                             <span class="text-xs text-amber-400 font-medium">Trial Pro: 1 TB Limit Active</span>
                         </label>
-                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="alert('Trial Pro File Slot Active! You can attach files up to 1 TB during your free trial window.')">
+                        <div class="border-2 border-dashed border-gray-800 hover:border-cyan-500/50 rounded-2xl p-6 text-center bg-darkbg/50 transition-all cursor-pointer relative" onclick="handleFileAreaClick()">
+                            <!-- Hidden actual file input -->
+                            <input type="file" id="realFileInput" class="hidden" multiple onchange="handleFileSelected(event)">
+                            
                             <div class="w-12 h-12 mx-auto rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-3">
                                 <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
                             </div>
-                            <p class="text-sm font-medium text-gray-300">Drag & drop files here, or click to browse (1 TB Trial Capacity)</p>
+                            <p id="fileUploadText" class="text-sm font-medium text-gray-300">Drag & drop files here, or click to browse (1 TB Trial Capacity)</p>
                         </div>
                     </div>
 
@@ -221,6 +224,8 @@
         const proView = document.getElementById('proView');
         const retrievedContent = document.getElementById('retrievedContent');
         const blurWrapper = document.getElementById('blurWrapper');
+        const realFileInput = document.getElementById('realFileInput');
+        const fileUploadText = document.getElementById('fileUploadText');
 
         let currentMessageId = null;
 
@@ -235,6 +240,24 @@
                 history.pushState(null, '', window.location.pathname);
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Zindagi mein sirf aik baar trial message dikhane ka logic
+        function handleFileAreaClick() {
+            const hasSeenTrialMsg = localStorage.getItem('rummaina_seen_trial_msg');
+            if (!hasSeenTrialMsg) {
+                alert("🔥 Trial Pro File Slot Active! You can attach files up to 1 TB during your free trial window.");
+                localStorage.setItem('rummaina_seen_trial_msg', 'true');
+            }
+            realFileInput.click();
+        }
+
+        function handleFileSelected(event) {
+            const files = event.target.files;
+            if (files && files.length > 0) {
+                const fileNames = Array.from(files).map(f => f.name).join(', ');
+                fileUploadText.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-file-circle-check"></i> Attached: ${fileNames}</span>`;
+            }
         }
 
         function initTrialTimer() {
@@ -307,7 +330,6 @@
             }
 
             try {
-                // Fully client-side base64 encoding compatible with static hosting like GitHub Pages
                 const encodedData = btoa(unescape(encodeURIComponent(textValue)));
 
                 let projects = parseInt(localStorage.getItem('rummaina_project_count') || '0');
